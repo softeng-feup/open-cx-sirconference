@@ -11,7 +11,7 @@ Speakers:
 
 "As a presenter in conferences, I would like further involvement from my audience, so as to make sure they understand each and every point of my speech."
 
-"As a presenter in conferences, I would like appreciate involvement from the participants, so that they could play an active role throughout the conference and help me conduct it."
+"As a presenter in conferences, I would like further involvement from the participants, so that they could play an active role throughout the conference and help me conduct it."
 
 "As a presenter in conferences, I want to know/answer the audience's questions in a timely way, because I feel they can be a great addition to that specific topic rather than possibly being taken as a random question in the end."
 
