@@ -17,9 +17,9 @@ Speakers:
 
 Audience:
 
-"As a usual attender in conferences, I wish to make questions in an anonymous way, so that I can see them answered without being closely observed by the remaining audience during the process."
+"As a usual attender in conferences, I wish I could ask questions in an anonymous way, so that I could see them answered without being closely observed by the remaining audience during the process."
 
-"As a participant in conferences, I want speakers to look into my questions in time, so that I can immediatly make my point of view for that subject and move on to the next one, while remaining focused."
+"As a participant in conferences, I want speakers to look into my questions in time, so that I can immediately make my point of view for that subject and move on to the next one, while remaining focused."
 
 "As a participant, I want questions to be carefully selected, so that the most revelant ones are answered."
 
