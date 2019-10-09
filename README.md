@@ -1,6 +1,6 @@
 # Vision
 
-Our vision is simple: we want to revolutionise the way conferences are carried out. Ultimately, wee are aiming towards a new "conference style", in which participants have a bigger role than ever. In our view, conferences should no longer be about big talks and just hearing.
+Our vision is simple: we want to revolutionise the way conferences are carried out. Ultimately, we are aiming towards a new "conference style", in which participants have a bigger role than ever. In our view, conferences should no longer be about big talks and just hearing.
 
 By accomplishing this mission, we are making such events way more interesting for everyone. Presenters will experience a greater involvement from their audience, and the latter will not have any reasons not to actively participate on the conference. Everyone will be able to share their thoughts/concerns in the way they deem more comfortable for themselves, including anonymously.
 
