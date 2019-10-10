@@ -8,7 +8,7 @@ If we had just to list some values we value, those would surely be in the list:
  - Safistied users;
  - Contribution to community;
  - Product quality;
- - Simple, yet functional;
+ - Simple, yet functional.
  
 To make it more clear, we intend to implement a solution that is going to serve the most two important cores of any conference: speakers and audience. For more information on how both will benefit from our implementation, please refer to the user stories section.
 
