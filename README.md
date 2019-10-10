@@ -4,7 +4,7 @@ Our vision is simple: we want to revolutionise the way conferences are carried o
 
 By accomplishing this mission, we are making such events way more interesting for everyone. Presenters will experience a greater involvement from their audience, and the latter will not have any reasons not to actively participate on the conference. Everyone will be able to share their thoughts/concerns in the way they deem more comfortable for themselves, including anonymously.
 
-If we had to just some values we value, those would surely be in the list:
+If we had just to list some values we value, those would surely be in the list:
  - Safistied users;
  - Contribution to community;
  - Product quality;
