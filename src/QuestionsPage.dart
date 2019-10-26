@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class QuestionsPage extends StatefulWidget {
   @override
@@ -9,6 +11,19 @@ class QuestionsPage extends StatefulWidget {
 }
 
 class QuestionsPageState extends State<QuestionsPage> {
+
+  void addData() {
+    var url = "https://esof.000webhostapp.com/addData.php";
+    var body = {
+    "id" : "1",
+    "user" : "User X",
+    "question" : "Demo question?"
+    };
+    http.post(url, body: body);
+
+    print("Realizou o add Data\n");
+  }
+
   final TextEditingController t1 = new TextEditingController();
   List<Widget> children = [
     Padding(padding: const EdgeInsets.only(top: 20)),
@@ -18,6 +33,7 @@ class QuestionsPageState extends State<QuestionsPage> {
   ];
 
   _submitQuestion(BuildContext context) {
+    addData();
     setState(() {
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
       children.add(QuestionBox(t1.text));
@@ -135,6 +151,7 @@ class Upvote extends StatefulWidget {
 
 class UpvoteState extends State<Upvote> {
   int _num_votes = 132;
+
   @override
   Widget build(BuildContext context) {
     return Row(
