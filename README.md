@@ -41,7 +41,7 @@ Our vision is simple: we want to revolutionise the way conferences are carried o
 ## Elevator Pitch
 
 (todo: translate)Para dar resposta à necessidade de envolver os participantes das conferências, quer entre si mesmos, quer com os palestrantes, pretende-se criar a app "Conference Manager". Esta pretende aumentar a facilidade por parte dos participantes em colocar perguntas ao palestrante através de uma app. Caso vários participantes tenham a mesma questão, podem simplesmente dar "like" numa que já exista, aumentando a sua prioridade. As perguntas serão mostradas num ecrã orientado ao palestrante, através de um raspberry pi. Esta solução permite que as perguntas sejam respondidas em tempo pertinente,evitando mudanças de contexto que prejudiquem o rumo da conferência.
-
+To answer the need to enrich the interations between the participants of a conference with each other and with the speakers of a lecture, we created the app *Conference Manager*. This app allows the participants to ask questions to the speaker through an app, making the sometimes nerve
 ---
 ## Requirements
 
@@ -59,39 +59,28 @@ Start by contextualizing your module, describing the main concepts, terms, roles
 
 Our user stories can be seen in [this link](https://trello.com/b/lqFjtiSm/user-stories)
 
-Some mockups that aim to represent our solution to the user stories:
-
-![Mockup1](requirements/Mockup1.png)
-![Mockup2](requirements/Mockup2.png)
-![Mockup3](requirements/Mockup3.png)
-
 ### Domain model
 
-To better understand the context of the software system, it is very useful to have a simple UML class diagram with all the key concepts (names, attributes) and relationships involved of the problem domain addressed by your module.
+![Domain model](requirements/DomainModel.png)
 
 ---
 
 ## Architecture and Design
-The architecture of a software system encompasses the set of key decisions about its overall organization. 
 
-A well written architecture document is brief but reduces the amount of time it takes new programmers to a project to understand the code to feel able to make modifications and enhancements.
-
-To document the architecture requires describing the decomposition of the system in their parts (high-level components) and the key behaviors and collaborations between them. 
-
-In this section you should start by briefly describing the overall components of the project and their interrelations. You should also describe how you solved typical problems you may have encountered, pointing to well-known architectural and design patterns, if applicable.
+*Coming soon*
 
 ### Logical architecture
 
 *Coming soon*
 
 ### Prototype
-To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system.
 
-In this subsection please describe in more detail which, and how, user(s) story(ies) were implemented.
+*Coming soon*
 
 ---
 
 ## Implementation
+
 *Coming soon*
 ---
 ## Test
