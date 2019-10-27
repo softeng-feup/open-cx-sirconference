@@ -11,16 +11,10 @@ class QuestionsPage extends StatefulWidget {
 }
 
 class QuestionsPageState extends State<QuestionsPage> {
-
   void addData() {
     var url = "https://esof.000webhostapp.com/addData.php";
-    var body = {
-    "id" : "1",
-    "user" : "User X",
-    "question" : "Demo question?"
-    };
-    http.post(url, body: body);
-
+    http.post(url,
+        body: {"id": '9', "username": "UserXX", "question" : t1.text});
     print("Realizou o add Data\n");
   }
 
