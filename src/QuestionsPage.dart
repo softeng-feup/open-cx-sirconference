@@ -15,7 +15,6 @@ class QuestionsPageState extends State<QuestionsPage> {
     var url = "https://esof.000webhostapp.com/addData.php";
     http.post(url,
         body: {"id": '9', "username": "UserXX", "question" : t1.text});
-    print("Realizou o add Data\n");
   }
 
   final TextEditingController t1 = new TextEditingController();
