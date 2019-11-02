@@ -1,4 +1,5 @@
 import 'package:esof/QuestionsPage.dart';
+import 'package:esof/SignUpPage.dart';
 import 'package:esof/authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -148,11 +149,19 @@ class LogInPageState extends State<LogInPage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                 ),
-                Text('Sign up!',
-                    style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 18,
-                        decoration: TextDecoration.underline))
+                RawMaterialButton(
+                  child: Text('Sign up!',
+                      style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: 18,
+                          decoration: TextDecoration.underline)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                    );
+                  },
+                )
               ])
             ])));
   }

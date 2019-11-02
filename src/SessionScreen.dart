@@ -1,57 +1,84 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(SessionScreen("User1"));
+void main() => runApp(SessionScreen("Jack Person"));
 
 class SessionScreen extends StatelessWidget {
   final String _username;
   SessionScreen(this._username);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Conference Manager',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Conference Manager'),
-        ),
+    return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Container(
-              margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
-              child: TextSection(Colors.white,'Current username:'),
+              padding: EdgeInsets.only(top: 100),
+              child: Text(
+                'Conference\nManager',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 35,
+                    fontFamily: 'CustomFont'),
+                textAlign: TextAlign.center,
+              ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: TextSection(Colors.white,_username),
+              padding: EdgeInsets.fromLTRB(30, 30, 0, 0),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    'Logged in as :',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'CustomFont'),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 100, 0, 0) ,
-              child: InputSection(Colors.white,' Enter session code here'),
+              margin: EdgeInsets.only(top: 20),
+              child: Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 25),
+                  ),
+                  Image.asset(
+                    'assets/userLogo.png',
+                    height: 70,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20),
+                  ),
+                  Text(
+                    _username,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        fontFamily: 'CustomFont'),
+                    textAlign: TextAlign.center,
+                  ),
+                  Spacer(),
+                  Image.asset(
+                    'assets/settings.png',
+                    height: 35,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 20),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 100) ,
+              child: InputSection('Enter session code here'),
             ),
           ],
         ),
         backgroundColor: Colors.white,
-      ),
-    );
-  }
-}
-
-class TextSection extends StatelessWidget {
-  final Color _color;
-  final String _text;
-  TextSection(this._color,this._text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: _color,
-      ),
-
-      child: Center(
-        child: Text(_text),
-      ),
     );
   }
 }
@@ -75,44 +102,52 @@ class UserSection extends StatelessWidget {
 }
 
 class InputSection extends StatefulWidget{
-  final Color _color;
   final String _text;
-  InputSection(this._color,this._text);
+  InputSection(this._text);
   @override
-  InputState createState() => new InputState(_color,_text);
+  InputState createState() => new InputState(_text);
 }
 
 class InputState extends State<InputSection>{
 
-  final Color _color;
   final String _text;
   final TextEditingController controller = new TextEditingController();
   String code = "";
-  InputState(this._color,this._text);
+  InputState(this._text);
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      decoration: new BoxDecoration(
-        color: _color,
-      ),
-      child: new Center(
-        child: new Column(
-          children: <Widget>[
-            new TextField(
-              decoration: new InputDecoration(
-                hintText: _text
-              ),
-              onSubmitted: (String code) {
-                setState(() {
-                  this.code = code;
-                  print(code);
-                });
-                controller.text = "";
-              },
-              controller: controller,
-            ),
-          ],
-        ),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: TextField(
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: true,
+              decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 4.0, horizontal: 10),
+                  hintText: 'Session Code',
+                  hintStyle: TextStyle(
+                      fontFamily: 'CustomFont',
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                  border: OutlineInputBorder(
+                      borderRadius:
+                      const BorderRadius.all(Radius.circular(0.1))))),
+          ),
+          Padding(
+              padding: EdgeInsets.only(right: 10)
+          ),
+          SizedBox(
+              width: 70, // match_parent
+              height: 44,
+              child: RaisedButton(
+                  onPressed: (){},
+                  child: Text(
+                    'Go',
+                  ))),
+        ],
       ),
     );
   }

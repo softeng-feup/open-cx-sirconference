@@ -47,6 +47,8 @@ flutter:
   assets:
     - assets/fbLogo.png
     - assets/signUpLine.png
+    - assets/userLogo.png
+    - assets/settings.png
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

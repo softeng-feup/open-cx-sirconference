@@ -1,5 +1,7 @@
+import 'package:esof/SessionScreen.dart';
 import 'package:flutter/material.dart';
 import 'LogInPage.dart';
+import 'SignUpPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LogInPage(),
+      home: SessionScreen("Username"),
     );
   }
 }
