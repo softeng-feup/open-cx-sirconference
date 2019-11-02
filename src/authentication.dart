@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
-/* Struct containing the info about a log in request */
+/* Struct containing the info about a log in request. */
 class LogInRequest {
   final username;
   final password;
@@ -14,10 +14,9 @@ Future<String> getUserData(String username) async {
   var url = "https://esof.000webhostapp.com/getPassword.php?username=" + username;
   http.Response response = await http.get(url);
   String data = json.decode(response.body).toString();
-  int index = data.indexOf('password:');
   if (data == 'null') // condition under which a non-existent username was input
     return data;
-  return data.substring(index + 10, data.length - 1);
+  return data.substring(11, data.length - 1);
 }
 
 /* Processes a log in request. Returns true if successfully logged in and false otherwise. */
@@ -29,7 +28,6 @@ Future<bool> processLogInRequest(LogInRequest req) async {
   if (matchPassword == 'null') // non-existent account, so log in fails
     return false;
   matchPassword = matchPassword.toString();
-  cryptPassword = req.password; // to be deleted
   if (cryptPassword == matchPassword)
     return true;
   return false;
