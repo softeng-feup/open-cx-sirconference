@@ -121,8 +121,9 @@ class QuestionBox extends StatelessWidget {
             Row(
               children: <Widget>[
                 Text('User X'),
-                SizedBox(width: 240),
+                Spacer(),
                 Upvote(),
+                Padding(padding: EdgeInsets.only(right: 10))
               ],
             )
           ],
@@ -143,14 +144,27 @@ class Upvote extends StatefulWidget {
 }
 
 class UpvoteState extends State<Upvote> {
+  // ignore: non_constant_identifier_names
   int _num_votes = 132;
+  bool liked = false;
+
+  _pressed() {
+    setState(() {
+      if (liked)
+        _num_votes--;
+      else _num_votes++;
+      liked = !liked;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Icon(Icons.favorite),
-        SizedBox(width: 3),
+        IconButton(
+            icon: Icon(liked ? Icons.favorite : Icons.favorite_border),
+            onPressed: () => _pressed(),
+        ),
         Text('$_num_votes'),
       ],
     );

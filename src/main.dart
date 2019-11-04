@@ -1,3 +1,4 @@
+import 'package:esof/QuestionsPage.dart';
 import 'package:esof/SessionScreen.dart';
 import 'package:flutter/material.dart';
 import 'LogInPage.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LogInPage(),
+      home: QuestionsPage(),
     );
   }
 }
