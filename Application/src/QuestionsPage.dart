@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:esof/questionsDB.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class QuestionsPage extends StatefulWidget {
   @override
@@ -12,11 +13,6 @@ class QuestionsPage extends StatefulWidget {
 }
 
 class QuestionsPageState extends State<QuestionsPage> {
-  void addData() {
-    var url = "https://esof.000webhostapp.com/addData.php";
-    http.post(url,
-        body: {"username": "UserXX", "question" : t1.text});
-  }
 
   final TextEditingController t1 = new TextEditingController();
   List<Widget> children = [
@@ -26,17 +22,25 @@ class QuestionsPageState extends State<QuestionsPage> {
     Image.asset('assets/signUpLine.png')
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    displayQuestions();
+  }
+
   displayQuestions() async{
-    List<Question> questions = retrieveQuestions() as List<Question>;
-    print(questions);
-    for(var question in questions) {
-      //_submitQuestion(context, question);
+    List<Question> questions = await retrieveQuestions();
+    for(Question question in questions) {
+      children.add(Padding(padding: const EdgeInsets.only(top: 10)));
+      children.add(QuestionBox(question.text));
     }
+    setState(() {});
   }
 
   _submitQuestion(BuildContext context, String text) {
-    retrieveQuestions();
-    addData();
+    if (text.length == 0)
+      return;
+    addQuestion(text);
     setState(() {
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
       children.add(QuestionBox(text));
@@ -47,6 +51,7 @@ class QuestionsPageState extends State<QuestionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    //displayQuestions();
     return Scaffold(
         floatingActionButton:
             QuestionButton(onPressed: () => _displayDialog(context)),

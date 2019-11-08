@@ -31,7 +31,7 @@ class LogInPageState extends State<LogInPage> {
   }
 
   authenticate() {
-    setState(()  {
+    setState(() {
       assyncAuthenticate();
     });
   }
@@ -61,7 +61,8 @@ class LogInPageState extends State<LogInPage> {
                 padding: const EdgeInsets.only(top: 60),
               ),
               Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 25, vertical: 5),
                   child: Column(
                     children: <Widget>[
                       TextField(
@@ -97,7 +98,8 @@ class LogInPageState extends State<LogInPage> {
                                   fontWeight: FontWeight.bold),
                               border: OutlineInputBorder(
                                   borderRadius:
-                                  const BorderRadius.all(Radius.circular(0.1))))),
+                                  const BorderRadius.all(
+                                      Radius.circular(0.1))))),
                       Padding(
                         padding: const EdgeInsets.only(top: 25),
                       ),
@@ -122,20 +124,21 @@ class LogInPageState extends State<LogInPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 20),
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-                Image.asset(
-                  'assets/fbLogo.png',
-                  height: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                ),
-                Text('Login with Facebook',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500)),
-              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      'assets/fbLogo.png',
+                      height: 25,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                    ),
+                    Text('Login with Facebook',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                  ]),
               Padding(
                 padding: const EdgeInsets.only(top: 70),
               ),
@@ -143,57 +146,27 @@ class LogInPageState extends State<LogInPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 15),
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-                Text('Don\'t have an account?',
-                    style: TextStyle(color: Colors.black, fontSize: 18)),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                ),
-                RawMaterialButton(
-                  child: Text('Sign up!',
-                      style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 18,
-                          decoration: TextDecoration.underline)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUpPage()),
-                    );
-                  },
-                )
-              ])
+              Row(mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Don\'t have an account?',
+                        style: TextStyle(color: Colors.black, fontSize: 18)),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                    ),
+                    RawMaterialButton(
+                      child: Text('Sign up!',
+                          style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontSize: 18,
+                              decoration: TextDecoration.underline)),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUpPage()),
+                        );
+                      },
+                    )
+                  ])
             ])));
   }
-
-  /*Future getData() async {
-    /*var url = 'https://esof.000webhostapp.com/get.php';
-    http.Response response = await http.get(url);
-    data = json.decode(response.body);
-    print(data);*/
-
-
-      /*var url = "https://esof.000webhostapp.com/getPassword.php?user=" + username;
-      var body = {
-        "username": "user1"
-      };
-      http.post(url, body: body);
-      http.Response response = await http.get(url);
-      data = json.decode(response.body);
-      print(data);*/
-
-      //var test = "aaa";
-      //var bytes = utf8.encode(test);
-      //var cryp = sha256.convert(bytes);
-      //print(cryp.toString());
-
-  }*/
-
-  /*checkAccount(String username, String password) async {
-    var url = "https://esof.000webhostapp.com/getPassword.php?username=" + username;
-    http.Response response = await http.get(url);
-    var data = json.decode(response.body);
-    print(data);
-    return false;
-  }*/
 }
