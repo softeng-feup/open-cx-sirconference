@@ -40,8 +40,7 @@ Our vision is simple: we want to revolutionise the way conferences are carried o
 ---
 ## Elevator Pitch
 
-(todo: translate)Para dar resposta à necessidade de envolver os participantes das conferências, quer entre si mesmos, quer com os palestrantes, pretende-se criar a app "Conference Manager". Esta pretende aumentar a facilidade por parte dos participantes em colocar perguntas ao palestrante através de uma app. Caso vários participantes tenham a mesma questão, podem simplesmente dar "like" numa que já exista, aumentando a sua prioridade. As perguntas serão mostradas num ecrã orientado ao palestrante, através de um raspberry pi. Esta solução permite que as perguntas sejam respondidas em tempo pertinente,evitando mudanças de contexto que prejudiquem o rumo da conferência.
-To answer the need to enrich the interations between the participants of a conference with each other and with the speakers of a lecture, we created the app *Conference Manager*. This app allows the participants to ask questions to the speaker through an app, making the sometimes nerve
+To answer the need to enrich the interations between the participants of a conference with each other and with the speakers of a lecture, we created the app *Conference Manager*. This app allows the participants to ask questions to the speaker through an app, making it so they don't shy away from asking the questions they want to. If multiple participants have the same question, they can hit the like button to give an higher priority to that question. These questions are shown in a screen using a raspberry pi that the speaker can see so they can answer the questions. This allows the speaker to answer these questions at the apropriate time without interupting their speech, making it so context changes don't undermine the flow of the speech.
 ---
 ## Requirements
 
