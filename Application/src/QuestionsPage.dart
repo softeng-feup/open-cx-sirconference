@@ -1,3 +1,4 @@
+import 'package:esof/questionsDB.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +15,7 @@ class QuestionsPageState extends State<QuestionsPage> {
   void addData() {
     var url = "https://esof.000webhostapp.com/addData.php";
     http.post(url,
-        body: {"id": '9', "username": "UserXX", "question" : t1.text});
+        body: {"username": "UserXX", "question" : t1.text});
   }
 
   final TextEditingController t1 = new TextEditingController();
@@ -25,11 +26,20 @@ class QuestionsPageState extends State<QuestionsPage> {
     Image.asset('assets/signUpLine.png')
   ];
 
-  _submitQuestion(BuildContext context) {
+  displayQuestions() async{
+    List<Question> questions = retrieveQuestions() as List<Question>;
+    print(questions);
+    for(var question in questions) {
+      //_submitQuestion(context, question);
+    }
+  }
+
+  _submitQuestion(BuildContext context, String text) {
+    retrieveQuestions();
     addData();
     setState(() {
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
-      children.add(QuestionBox(t1.text));
+      children.add(QuestionBox(text));
       t1.text = '';
     });
     Navigator.of(context).pop();
@@ -69,7 +79,7 @@ class QuestionsPageState extends State<QuestionsPage> {
                   },
                   child: Text('CANCEL')),
               FlatButton(
-                  onPressed: () => _submitQuestion(context),
+                  onPressed: () => _submitQuestion(context, t1.text),
                   child: Text('SUBMIT'))
             ],
           );
