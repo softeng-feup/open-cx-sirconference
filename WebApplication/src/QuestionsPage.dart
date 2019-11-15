@@ -6,7 +6,12 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 
 class QuestionsPage extends StatefulWidget {
 
+  final int sessionNumber;
   final QuestionsPageState qps = new QuestionsPageState();
+
+  QuestionsPage(this.sessionNumber) {
+    qps.setSessionNumber(this.sessionNumber);
+  }
 
   updateQuestions() {
     qps._updateQuestions();
@@ -20,13 +25,19 @@ class QuestionsPage extends StatefulWidget {
 
 class QuestionsPageState extends State<QuestionsPage> {
 
+  QuestionsPageState();
+
   List list = List();
   var isLoading = false;
   var cnt = 0;
+  static int sessionNumber;
 
-  List<Widget> children = [
-    Text("Session", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))
-  ];
+  setSessionNumber(sN) {
+    sessionNumber = sN;
+  }
+
+  List<Widget> children = [];
+  String questions;
 
   checkInternet() async {
     DataConnectionStatus status = await DataConnectionChecker().connectionStatus;
@@ -37,9 +48,8 @@ class QuestionsPageState extends State<QuestionsPage> {
     setState(() {
       isLoading = true; 
     });
-    final url = "https://jsonplaceholder.typicode.com/photos";
-    final response = await http.get(url);
-    
+    final url = "https://esof.000webhostapp.com/getQuestions.php";
+    http.Response response = await http.get(url);
     if (response.statusCode == 200) {
       list = json.decode(response.body) as List;
       setState(() {
@@ -50,20 +60,26 @@ class QuestionsPageState extends State<QuestionsPage> {
     }
   }
 
-  _updateQuestions() async{
+_updateQuestions() async{
     //DataConnectionStatus status = await checkInternet();
     //if (status == DataConnectionStatus.connected) {
       print("Updating Questions");
       children = [
-        Text("Session", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+                Text("Session " + sessionNumber.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ],
+            ),
+        Image.asset('assets/signUpLine.png')
       ];
-      _fetchData();
+      await _fetchData();
       setState(() {
         int maxQuestionsDisplayed = 6;
         if (list.length < maxQuestionsDisplayed) maxQuestionsDisplayed = list.length;
         for (int index = 0; index < maxQuestionsDisplayed; index++) {
           children.add(Padding(padding: const EdgeInsets.only(top: 10)));
-          children.add(QuestionBox(list[index]["title"],(list[index]["title"] + "\n"),5));
+          children.add(QuestionBox(list[index]["username"],(list[index]["question"] + "\n"),5));
         }
       });
     /*} else {
@@ -136,18 +152,24 @@ class QuestionBox extends StatelessWidget {
         width: double.infinity,
         child: Column(
           children: <Widget>[
-            Container(
-              child: Text(question),
+            Row(
+              children: <Widget>[
+                Text(question)
+              ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(top: 5),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text("by " + username),
-                SizedBox(width: 240),
-                Upvote(numUpvotes),
+                Image.asset('assets/userLogo.png',width: 30,height: 30),
+                Padding(
+                  padding: EdgeInsets.only(left: 5),
+                ),
+                Expanded(
+                  child: Text(username),
+                ),
+                Upvote(numUpvotes)
               ],
             )
           ],

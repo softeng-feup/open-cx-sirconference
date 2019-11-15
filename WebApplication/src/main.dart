@@ -9,7 +9,7 @@ void main() {
 
   Timer.periodic(Duration(seconds: 1), (timer) {
     cnt++;
-    if (cnt > 4) {
+    if (cnt > 1) {
       timer.cancel();
     } else app.updateQuestions();
   });
@@ -22,7 +22,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
 
-  final QuestionsPage questionsPage = new QuestionsPage();
+  final QuestionsPage questionsPage = new QuestionsPage(1);
 
   updateQuestions() {
     questionsPage.updateQuestions();
