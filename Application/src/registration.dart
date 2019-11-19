@@ -19,3 +19,13 @@ void addUser(SignUpRequest req) {
   http.post(url,
       body: {"username": req.username, "password" : cryptPassword});
 }
+
+/* Checks if a username already exists in the database */
+Future<bool> checkIfUsernameExists(String username) async {
+  var url = "https://esof.000webhostapp.com/getPassword.php?username=" + username;
+  http.Response response = await http.get(url);
+  String data = json.decode(response.body).toString();
+  if (data == 'null') // condition under which a non-existent username was input
+    return false;
+  return true;
+}

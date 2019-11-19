@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 
+
 class LogInPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -17,12 +18,14 @@ class LogInPageState extends State<LogInPage> {
   TextEditingController usernameController = new TextEditingController();
   TextEditingController pwController = new TextEditingController();
 
-  assyncAuthenticate() async {
+  bool _authenticated = false;
+
+  asyncAuthenticate() async {
     var inputUser = usernameController.text;
     var inputPw = pwController.text;
     LogInRequest req = new LogInRequest(inputUser, inputPw);
-    bool authenticated = await processLogInRequest(req);
-    if (authenticated) {
+    _authenticated = await processLogInRequest(req);
+    if (_authenticated) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QuestionsPage()),
@@ -32,8 +35,20 @@ class LogInPageState extends State<LogInPage> {
 
   authenticate() {
     setState(() {
-      assyncAuthenticate();
+      asyncAuthenticate();
     });
+    if (!_authenticated) {
+      pwController.text = '';
+      return showDialog(
+          context: context,
+          builder: (context)
+          {
+            return AlertDialog(
+                title: Text('Wrong username or password',
+                  style: TextStyle(fontSize: 18)),
+            );
+          });
+    }
   }
 
   @override

@@ -2,6 +2,8 @@ import 'package:esof/registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'authentication.dart';
+
 class SignUpPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -14,13 +16,53 @@ class SignUpPageState extends State<SignUpPage> {
   TextEditingController pwController = new TextEditingController();
   TextEditingController pwConfirmController = new TextEditingController();
 
+  var inputUser;
+  var inputPw;
+  var inputConfirmPw;
+
+  bool _existsUsername = true;
+
   register() {
-    var inputUser = usernameController.text;
-    var inputPw = pwController.text;
-    var inputConfirmPw = pwConfirmController.text;
-    if (inputPw != inputConfirmPw)
-      return;
-    addUser(SignUpRequest(inputUser, inputPw));
+    inputUser = usernameController.text;
+    inputPw = pwController.text;
+    inputConfirmPw = pwConfirmController.text;
+    if (inputPw != inputConfirmPw) {passwordsNoMatch(); return;}
+    verifyUsername();
+    if (!_existsUsername)
+      addUser(SignUpRequest(inputUser, inputPw));
+  }
+
+  asyncVerification() async {
+    _existsUsername = await checkIfUsernameExists(inputUser);
+  }
+
+  verifyUsername() {
+    setState(() {
+      asyncVerification();
+    });
+    if (_existsUsername) {
+      return showDialog(
+          context: context,
+          builder: (context)
+          {
+            return AlertDialog(
+              title: Text('Username already exists',
+                  style: TextStyle(fontSize: 18)),
+            );
+          });
+    }
+  }
+
+  passwordsNoMatch() {
+    return showDialog(
+        context: context,
+        builder: (context)
+        {
+          return AlertDialog(
+            content: Text('  Passwords don\'t match',
+                style: TextStyle(fontSize: 20)),
+          );
+        });
   }
 
   @override
