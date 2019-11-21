@@ -1,20 +1,22 @@
 import 'dart:convert';
+import 'package:esof/QuestionsPage.dart';
 import 'package:http/http.dart' as http;
 
 class Question {
   final user;
   final text;
   final likesCount;
-  const Question(this.user, this.text, this.likesCount);
+  final session;
+  const Question(this.user, this.text, this.likesCount, this.session);
 }
 
 /* Gets the questions from the database, processing the received data and returning it in the form of a list. */
-Future<List<Question>> retrieveQuestions() async {
+Future<List<Question>> retrieveQuestions(int sessionCode) async {
   var url = "https://esof.000webhostapp.com/getQuestions.php";
   http.Response response = await http.get(url);
   String data = json.decode(response.body).toString();
   List<String> questions = splitData(data);
-  return parseQuestions(questions);
+  return parseQuestions(questions, sessionCode); //
 }
 
 /* Receives a big string containing all the questions retrieved, splitting it into individual strings (one for each question). */
@@ -38,22 +40,27 @@ Question parseQuestion(String data) {
   usernameIndex = data.indexOf(',') - 1; // index where the username string ends
   String username = data.substring(0, usernameIndex + 1);
   int questionIndex = data.indexOf('question:') + 10; // index where the question starts
-  String question = data.substring(questionIndex); // now the question starts at position 0
-  return new Question(username, question, 0);
+  int sessionIndex = data.indexOf('session:');
+  String question = data.substring(questionIndex, sessionIndex - 2); // now the question starts at position 0
+  int sessionC = int.parse(data.substring(sessionIndex + 9)); //
+  return new Question(username, question, 0, sessionC);
 }
 
 /* Converts a list of Strings into a list of Questions. */
-List<Question> parseQuestions(List<String> data) {
+List<Question> parseQuestions(List<String> data, int code) { //
   List<Question> questions = [];
   for (var element in data) {
+    Question temp = parseQuestion(element); //
+    if(temp.session != code) //
+      continue; //
     questions.add(parseQuestion(element));
   }
   return questions;
 }
 
 /* Inserts a question into the database. */
-void addQuestion(String question) {
+void addQuestion(Question question) {
   var url = "https://esof.000webhostapp.com/addData.php";
   http.post(url,
-      body: {"username": "UserXX", "question" : question});
+      body: {"username": question.user, "question" : question.text, "session" : question.session.toString()});
 }

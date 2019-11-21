@@ -1,4 +1,5 @@
 import 'package:esof/QuestionsPage.dart';
+import 'package:esof/SessionScreen.dart';
 import 'package:esof/SignUpPage.dart';
 import 'package:esof/authentication.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,17 +19,18 @@ class LogInPageState extends State<LogInPage> {
   TextEditingController usernameController = new TextEditingController();
   TextEditingController pwController = new TextEditingController();
 
-  bool _authenticated = false;
+  bool _authenticated = true;
 
   asyncAuthenticate() async {
     var inputUser = usernameController.text;
     var inputPw = pwController.text;
     LogInRequest req = new LogInRequest(inputUser, inputPw);
-    _authenticated = await processLogInRequest(req);
-    if (_authenticated) {
+    bool authenticated = await processLogInRequest(req);
+    _authenticated = authenticated;
+    if (authenticated) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionsPage()),
+        MaterialPageRoute(builder: (context) => SessionScreen("Username")),
       );
     }
   }

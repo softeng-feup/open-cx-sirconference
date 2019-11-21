@@ -1,3 +1,4 @@
+import 'package:esof/QuestionsPage.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SessionScreen("Jack Person"));
@@ -112,8 +113,16 @@ class InputState extends State<InputSection>{
 
   final String _text;
   final TextEditingController controller = new TextEditingController();
-  String code = "";
   InputState(this._text);
+
+  joinSession() {
+    int code = int.parse(controller.text);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QuestionsPage(code)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -122,6 +131,7 @@ class InputState extends State<InputSection>{
         children: <Widget>[
           Flexible(
             child: TextField(
+              controller: controller,
               keyboardType: TextInputType.visiblePassword,
               obscureText: true,
               decoration: InputDecoration(
@@ -143,7 +153,7 @@ class InputState extends State<InputSection>{
               width: 70, // match_parent
               height: 44,
               child: RaisedButton(
-                  onPressed: (){},
+                  onPressed: joinSession,
                   child: Text(
                     'Go',
                   ))),

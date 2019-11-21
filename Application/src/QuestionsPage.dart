@@ -5,7 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+int sessionCode = 0;
+
 class QuestionsPage extends StatefulWidget {
+  QuestionsPage(int code) {
+    sessionCode = code;
+    print(sessionCode);
+  }
   @override
   State<StatefulWidget> createState() {
     return QuestionsPageState();
@@ -29,7 +35,7 @@ class QuestionsPageState extends State<QuestionsPage> {
   }
 
   displayQuestions() async{
-    List<Question> questions = await retrieveQuestions();
+    List<Question> questions = await retrieveQuestions(sessionCode);
     for(Question question in questions) {
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
       children.add(QuestionBox(question.text));
@@ -40,7 +46,8 @@ class QuestionsPageState extends State<QuestionsPage> {
   _submitQuestion(BuildContext context, String text) {
     if (text.length == 0)
       return;
-    addQuestion(text);
+    Question question = Question("username", text, 0, sessionCode);
+    addQuestion(question);
     setState(() {
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
       children.add(QuestionBox(text));

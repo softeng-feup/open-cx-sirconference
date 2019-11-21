@@ -46,7 +46,7 @@ class SignUpPageState extends State<SignUpPage> {
           builder: (context)
           {
             return AlertDialog(
-              title: Text('Username already exists',
+              title: Text('  Username already exists',
                   style: TextStyle(fontSize: 18)),
             );
           });
