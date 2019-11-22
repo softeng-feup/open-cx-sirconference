@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'AdminSessionScreen.dart';
+
 
 
 class LogInPage extends StatefulWidget {
@@ -28,10 +30,17 @@ class LogInPageState extends State<LogInPage> {
     bool authenticated = await processLogInRequest(req);
     _authenticated = authenticated;
     if (authenticated) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SessionScreen("Username")),
-      );
+
+      if (inputUser == 'admin')
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AdminSessionScreen(inputUser)),
+        );
+      else
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SessionScreen(inputUser)),
+        );
     }
   }
 
