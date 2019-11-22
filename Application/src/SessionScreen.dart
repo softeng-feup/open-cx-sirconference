@@ -1,83 +1,87 @@
 import 'package:esof/QuestionsPage.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(SessionScreen("Jack Person"));
+String username;
 
 class SessionScreen extends StatelessWidget {
   final String _username;
-  SessionScreen(this._username);
+  SessionScreen(this._username) {
+    username = this._username;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:[
-            Container(
-              padding: EdgeInsets.only(top: 100),
-              child: Text(
-                'Conference\nManager',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                    fontFamily: 'CustomFont'),
-                textAlign: TextAlign.center,
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              Container(
+                padding: EdgeInsets.only(top: 100),
+                child: Text(
+                  'Conference\nManager',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35,
+                      fontFamily: 'CustomFont'),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(30, 30, 0, 0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'Logged in as :',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        fontFamily: 'CustomFont'),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+              Container(
+                padding: EdgeInsets.fromLTRB(30, 30, 0, 0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'Logged in as :',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'CustomFont'),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 25),
-                  ),
-                  Image.asset(
-                    'assets/userLogo.png',
-                    height: 70,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                  ),
-                  Text(
-                    _username,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        fontFamily: 'CustomFont'),
-                    textAlign: TextAlign.center,
-                  ),
-                  Spacer(),
-                  Image.asset(
-                    'assets/settings.png',
-                    height: 35,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20),
-                  ),
-                ],
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 25),
+                    ),
+                    Image.asset(
+                      'assets/userLogo.png',
+                      height: 70,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20),
+                    ),
+                    Text(
+                      _username,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          fontFamily: 'CustomFont'),
+                      textAlign: TextAlign.center,
+                    ),
+                    Spacer(),
+                    Image.asset(
+                      'assets/settings.png',
+                      height: 35,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 20),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 100) ,
-              child: InputSection('Enter session code here'),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.only(top: 100) ,
+                child: InputSection('Enter session code here'),
+              ),
+            ],
+          ),
         ),
         backgroundColor: Colors.white,
     );
@@ -119,7 +123,7 @@ class InputState extends State<InputSection>{
     int code = int.parse(controller.text);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QuestionsPage(code)),
+      MaterialPageRoute(builder: (context) => QuestionsPage(code, username)),
     );
   }
 

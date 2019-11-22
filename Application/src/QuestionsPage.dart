@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 int sessionCode = 0;
+String username;
 
 class QuestionsPage extends StatefulWidget {
-  QuestionsPage(int code) {
+  QuestionsPage(int code, String user) {
     sessionCode = code;
+    username = user;
     print(sessionCode);
   }
   @override
@@ -38,7 +40,7 @@ class QuestionsPageState extends State<QuestionsPage> {
     List<Question> questions = await retrieveQuestions(sessionCode);
     for(Question question in questions) {
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
-      children.add(QuestionBox(question.text));
+      children.add(QuestionBox(question.text, question.user));
     }
     setState(() {});
   }
@@ -46,11 +48,11 @@ class QuestionsPageState extends State<QuestionsPage> {
   _submitQuestion(BuildContext context, String text) {
     if (text.length == 0)
       return;
-    Question question = Question("username", text, 0, sessionCode);
+    Question question = Question(username, text, 0, sessionCode);
     addQuestion(question);
     setState(() {
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
-      children.add(QuestionBox(text));
+      children.add(QuestionBox(text, username));
       t1.text = '';
     });
     Navigator.of(context).pop();
@@ -121,9 +123,10 @@ class QuestionButton extends StatelessWidget {
 }
 
 class QuestionBox extends StatelessWidget {
-  QuestionBox(this.question);
+  QuestionBox(this.question, this.username);
 
   final String question;
+  final String username;
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +145,7 @@ class QuestionBox extends StatelessWidget {
             ),
             Row(
               children: <Widget>[
-                Text('User X'),
+                Text(username),
                 Spacer(),
                 Upvote(),
                 Padding(padding: EdgeInsets.only(right: 10))
