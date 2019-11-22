@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:data_connection_checker/data_connection_checker.dart';
+
+import 'package:web_app/SessionScreen.dart';
 
 class QuestionsPage extends StatefulWidget {
 
-  final int sessionNumber;
   final QuestionsPageState qps = new QuestionsPageState();
 
-  QuestionsPage(this.sessionNumber) {
-    qps.setSessionNumber(this.sessionNumber);
+  setSessionNumber(String sN){
+    qps.setSessionNumber(sN);
   }
 
   updateQuestions() {
@@ -30,19 +30,14 @@ class QuestionsPageState extends State<QuestionsPage> {
   List list = List();
   var isLoading = false;
   var cnt = 0;
-  static int sessionNumber;
+  String sessionNumber;
 
-  setSessionNumber(sN) {
+  setSessionNumber(String sN) {
     sessionNumber = sN;
   }
 
   List<Widget> children = [];
   String questions;
-
-  checkInternet() async {
-    DataConnectionStatus status = await DataConnectionChecker().connectionStatus;
-    return status;
-  }
 
   _fetchData() async {
     setState(() {
@@ -61,36 +56,47 @@ class QuestionsPageState extends State<QuestionsPage> {
   }
 
 _updateQuestions() async{
-    //DataConnectionStatus status = await checkInternet();
-    //if (status == DataConnectionStatus.connected) {
-      print("Updating Questions");
-      children = [
-        Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-                Text("Session " + sessionNumber.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              ],
-            ),
-        Image.asset('assets/signUpLine.png')
-      ];
-      await _fetchData();
-      setState(() {
-        int maxQuestionsDisplayed = 6;
-        if (list.length < maxQuestionsDisplayed) maxQuestionsDisplayed = list.length;
-        for (int index = 0; index < maxQuestionsDisplayed; index++) {
+    print("Updating Questions");
+    children = [
+      Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+              Text("Session " + sessionNumber.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            ],
+          ),
+      Image.asset('assets/signUpLine.png')
+    ];
+    await _fetchData();
+    setState(() {
+      int maxQuestionsDisplayed = 10;
+      if (list.length < maxQuestionsDisplayed) maxQuestionsDisplayed = list.length;
+      for (int index = 0; index < maxQuestionsDisplayed; index++) {
+        if (list[index]["session"] == sessionNumber){
           children.add(Padding(padding: const EdgeInsets.only(top: 10)));
           children.add(QuestionBox(list[index]["username"],(list[index]["question"] + "\n"),5));
         }
-      });
-    /*} else {
-      showDialog(
-        context: context,
-        builder:(context)=> AlertDialog(
-          title: Text("No Internet"),
-          content: Text("Check your internet connection."),
-        )
-      );
-    }*/
+      }
+      children.add(Padding(padding: const EdgeInsets.only(top: 10)));
+      children.add(SizedBox(
+                    width: 120, // match_parent
+                    height: 44,
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SessionScreen()),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget> [
+                          Text(
+                          'Quit Session',)
+                        ]
+                      )
+                    )
+                  ));
+    });
   }
 
   @override
@@ -110,7 +116,7 @@ _updateQuestions() async{
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   children:  children,
-                ),
+                )
               ),
             )
     );
