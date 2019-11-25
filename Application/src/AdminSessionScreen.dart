@@ -1,6 +1,8 @@
 import 'package:esof/QuestionsPage.dart';
 import 'package:flutter/material.dart';
 
+import 'QuestionsPageAdmin.dart';
+
 String username;
 
 class AdminSessionScreen extends StatelessWidget {
@@ -8,6 +10,7 @@ class AdminSessionScreen extends StatelessWidget {
   AdminSessionScreen(this._username) {
     username = this._username;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +83,8 @@ class AdminSessionScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 100) ,
               child: InputSection('Enter session code here'),
             ),
+            Padding(padding: EdgeInsets.only(bottom: 90),),
+            AdminSessionManagement(),
           ],
         ),
       ),
@@ -123,7 +128,7 @@ class InputState extends State<InputSection>{
     int code = int.parse(controller.text);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QuestionsPage(code, username)),
+      MaterialPageRoute(builder: (context) => QuestionsPageAdmin(code, username)),
     );
   }
 
@@ -163,6 +168,93 @@ class InputState extends State<InputSection>{
                   ))),
         ],
       ),
+    );
+  }
+}
+
+class AdminSessionManagement extends StatelessWidget {
+
+  final TextEditingController t1 = new TextEditingController();
+  final TextEditingController t2 = new TextEditingController();
+
+  _displayCreateDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Create a new session'),
+            content: TextField(
+
+              decoration: InputDecoration(hintText: 'Session Code'),
+              controller: t1,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    t1.text = '';
+                  },
+                  child: Text('CANCEL')),
+              FlatButton(
+                  onPressed: () => createSession(),
+                  child: Text('CREATE'))
+            ],
+          );
+        });
+  }
+
+  createSession() {} //TODO
+
+  _displayDeleteDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Delete a session'),
+            content: TextField(
+              decoration: InputDecoration(hintText: 'Type here'),
+              controller: t2,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    t2.text = '';
+                  },
+                  child: Text('CANCEL')),
+              FlatButton(
+                  onPressed: () => deleteSession(),
+                  child: Text('DELETE'))
+            ],
+          );
+        });
+  }
+
+  deleteSession() {} //TODO
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Padding(padding: EdgeInsets.only(left: 30),),
+        SizedBox(
+          height: 50,
+          child: RaisedButton(
+              onPressed: () => _displayCreateDialog(context),
+              child:
+              Text('Create a new session', style: TextStyle(fontSize: 15),)
+          ),
+        ),
+        Spacer(),
+        SizedBox(
+          height: 50,
+          child: RaisedButton(
+              onPressed: () => _displayDeleteDialog(context),
+              child: Text('Delete a session', style: TextStyle(fontSize: 15),)
+          ),
+        ),
+        Padding(padding: EdgeInsets.only(right: 30),)
+      ],
     );
   }
 }
