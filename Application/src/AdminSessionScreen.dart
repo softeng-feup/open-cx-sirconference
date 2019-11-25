@@ -1,4 +1,5 @@
 import 'package:esof/QuestionsPage.dart';
+import 'package:esof/sessionsManegement.dart';
 import 'package:flutter/material.dart';
 
 import 'QuestionsPageAdmin.dart';
@@ -7,6 +8,7 @@ String username;
 
 class AdminSessionScreen extends StatelessWidget {
   final String _username;
+
   AdminSessionScreen(this._username) {
     username = this._username;
   }
@@ -18,7 +20,7 @@ class AdminSessionScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children:[
+          children: [
             Container(
               padding: EdgeInsets.only(top: 100),
               child: Text(
@@ -80,10 +82,12 @@ class AdminSessionScreen extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 100) ,
+              margin: EdgeInsets.only(top: 100),
               child: InputSection('Enter session code here'),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 90),),
+            Padding(
+              padding: EdgeInsets.only(bottom: 90),
+            ),
             AdminSessionManagement(),
           ],
         ),
@@ -96,7 +100,8 @@ class AdminSessionScreen extends StatelessWidget {
 class UserSection extends StatelessWidget {
   final Color _color;
   final String _text;
-  UserSection(this._color,this._text);
+
+  UserSection(this._color, this._text);
 
   @override
   Widget build(BuildContext context) {
@@ -111,24 +116,27 @@ class UserSection extends StatelessWidget {
   }
 }
 
-class InputSection extends StatefulWidget{
+class InputSection extends StatefulWidget {
   final String _text;
+
   InputSection(this._text);
+
   @override
   InputState createState() => new InputState(_text);
 }
 
-class InputState extends State<InputSection>{
-
+class InputState extends State<InputSection> {
   final String _text;
   final TextEditingController controller = new TextEditingController();
+
   InputState(this._text);
 
   joinSession() {
     int code = int.parse(controller.text);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QuestionsPageAdmin(code, username)),
+      MaterialPageRoute(
+          builder: (context) => QuestionsPageAdmin(code, username)),
     );
   }
 
@@ -153,11 +161,9 @@ class InputState extends State<InputSection>{
                         fontWeight: FontWeight.bold),
                     border: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(0.1))))),
+                            const BorderRadius.all(Radius.circular(0.1))))),
           ),
-          Padding(
-              padding: EdgeInsets.only(right: 10)
-          ),
+          Padding(padding: EdgeInsets.only(right: 10)),
           SizedBox(
               width: 70, // match_parent
               height: 44,
@@ -173,7 +179,6 @@ class InputState extends State<InputSection>{
 }
 
 class AdminSessionManagement extends StatelessWidget {
-
   final TextEditingController t1 = new TextEditingController();
   final TextEditingController t2 = new TextEditingController();
 
@@ -184,7 +189,6 @@ class AdminSessionManagement extends StatelessWidget {
           return AlertDialog(
             title: Text('Create a new session'),
             content: TextField(
-
               decoration: InputDecoration(hintText: 'Session Code'),
               controller: t1,
             ),
@@ -196,14 +200,15 @@ class AdminSessionManagement extends StatelessWidget {
                   },
                   child: Text('CANCEL')),
               FlatButton(
-                  onPressed: () => createSession(),
+                  onPressed: () {
+                    createSession(t1.text, username);
+                    Navigator.of(context).pop();
+                  },
                   child: Text('CREATE'))
             ],
           );
         });
   }
-
-  createSession() {} //TODO
 
   _displayDeleteDialog(BuildContext context) {
     return showDialog(
@@ -223,37 +228,45 @@ class AdminSessionManagement extends StatelessWidget {
                   },
                   child: Text('CANCEL')),
               FlatButton(
-                  onPressed: () => deleteSession(),
+                  onPressed: () {
+                    deleteSession(t2.text, username);
+                    Navigator.of(context).pop();
+                  },
                   child: Text('DELETE'))
             ],
           );
         });
   }
 
-  deleteSession() {} //TODO
-
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Padding(padding: EdgeInsets.only(left: 30),),
+        Padding(
+          padding: EdgeInsets.only(left: 30),
+        ),
         SizedBox(
           height: 50,
           child: RaisedButton(
               onPressed: () => _displayCreateDialog(context),
-              child:
-              Text('Create a new session', style: TextStyle(fontSize: 15),)
-          ),
+              child: Text(
+                'Create a new session',
+                style: TextStyle(fontSize: 15),
+              )),
         ),
         Spacer(),
         SizedBox(
           height: 50,
           child: RaisedButton(
               onPressed: () => _displayDeleteDialog(context),
-              child: Text('Delete a session', style: TextStyle(fontSize: 15),)
-          ),
+              child: Text(
+                'Delete a session',
+                style: TextStyle(fontSize: 15),
+              )),
         ),
-        Padding(padding: EdgeInsets.only(right: 30),)
+        Padding(
+          padding: EdgeInsets.only(right: 30),
+        )
       ],
     );
   }
