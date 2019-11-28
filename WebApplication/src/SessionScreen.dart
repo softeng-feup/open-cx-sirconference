@@ -8,7 +8,7 @@ class SessionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Container(
@@ -16,7 +16,7 @@ class SessionScreen extends StatelessWidget {
                 'Conference\nManager',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 35,
+                    fontSize: 100,
                     fontFamily: 'CustomFont'),
                 textAlign: TextAlign.center,
               ),
@@ -49,16 +49,18 @@ class InputState extends State<InputSection>{
         children: <Widget>[
           Flexible(
             child: TextField(
+              style: TextStyle(
+                      fontSize: 50),
               controller: controller,
               keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
+              obscureText: false,
               decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                       vertical: 4.0, horizontal: 10),
                   hintText: 'Session Code',
                   hintStyle: TextStyle(
                       fontFamily: 'CustomFont',
-                      fontSize: 25,
+                      fontSize: 50,
                       fontWeight: FontWeight.bold),
                   border: OutlineInputBorder(
                       borderRadius:
@@ -68,29 +70,30 @@ class InputState extends State<InputSection>{
               padding: EdgeInsets.only(right: 10)
           ),
           SizedBox(
-              width: 70, // match_parent
-              height: 44,
+              width: 200,
+              height: 80,
               child: RaisedButton(
                   onPressed: () {
-                    int cnt = 0;
-                    final QuestionsPage questionsPage = new QuestionsPage();
-                    questionsPage.setSessionNumber(controller.text);
-                    Timer.periodic(Duration(seconds: 1), (timer) {
-                      cnt++;
-                      if (cnt > 1) {
-                        timer.cancel();
-                      } else questionsPage.updateQuestions();
-                    });
-                    Timer.periodic(Duration(seconds: 5), (timer) {
-                      questionsPage.updateQuestions();
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => questionsPage),
-                    );
+                    if (controller.text != "") {
+                      final QuestionsPage questionsPage = new QuestionsPage();
+                      questionsPage.setSessionNumber(controller.text);
+                      questionsPage.setActive();
+                      Timer.periodic(Duration(seconds: 20), (timer) {
+                        if (questionsPage.getActive())
+                          questionsPage.updateQuestions();
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => questionsPage),
+                      );
+                    }
                   },
                   child: Text(
                     'Go',
+                    style: TextStyle(
+                      fontFamily: 'CustomFont',
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold),
                   ))),
         ],
       ),

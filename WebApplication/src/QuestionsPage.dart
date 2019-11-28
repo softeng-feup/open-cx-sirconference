@@ -14,7 +14,15 @@ class QuestionsPage extends StatefulWidget {
   }
 
   updateQuestions() {
-    qps._updateQuestions();
+    qps.updateQuestions();
+  }
+
+  setActive(){
+    qps.setActive();
+  }
+
+  bool getActive() {
+    return qps.getActive();
   }
 
   @override
@@ -28,18 +36,32 @@ class QuestionsPageState extends State<QuestionsPage> {
   QuestionsPageState();
 
   List list = List();
-  var isLoading = false;
-  var cnt = 0;
+  bool isLoading = false;
+  int cnt = 0;
   String sessionNumber;
+  List<Widget> children = [];
+  String questions;
+  bool active;
+
+  @override
+  void initState() {
+    super.initState();
+    updateQuestions();
+  }
+
+  setActive() {
+    active = true;
+  }
+
+  bool getActive() {
+    return active;
+  }
 
   setSessionNumber(String sN) {
     sessionNumber = sN;
-  }
+  }  
 
-  List<Widget> children = [];
-  String questions;
-
-  _fetchData() async {
+  fetchData() async {
     setState(() {
       isLoading = true; 
     });
@@ -55,33 +77,37 @@ class QuestionsPageState extends State<QuestionsPage> {
     }
   }
 
-_updateQuestions() async{
+  updateQuestions() async{
     print("Updating Questions");
     children = [
       Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-              Text("Session " + sessionNumber.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              Text("Session " + sessionNumber.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 80)),
             ],
           ),
       Image.asset('assets/signUpLine.png')
     ];
-    await _fetchData();
+    await fetchData();
     setState(() {
-      int maxQuestionsDisplayed = 10;
-      if (list.length < maxQuestionsDisplayed) maxQuestionsDisplayed = list.length;
-      for (int index = 0; index < maxQuestionsDisplayed; index++) {
-        if (list[index]["session"] == sessionNumber){
+      int maxQuestionsDisplayed = 2;
+      int cnt = 0;
+      for (int index = 0; index < list.length; index++) {
+        if ((list[index]["session"] == sessionNumber) && (cnt < maxQuestionsDisplayed)){
           children.add(Padding(padding: const EdgeInsets.only(top: 10)));
-          children.add(QuestionBox(list[index]["username"],(list[index]["question"] + "\n"),5));
+          if (list[index]["likesCount"] == null)
+            children.add(QuestionBox(list[index]["username"],(list[index]["question"] + "\n"),"0"));
+          else children.add(QuestionBox(list[index]["username"],(list[index]["question"] + "\n"),list[index]["likesCount"]));
+          cnt++;
         }
       }
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
       children.add(SizedBox(
-                    width: 120, // match_parent
-                    height: 44,
+                    width: 300,
+                    height: 80,
                     child: RaisedButton(
                       onPressed: () {
+                        active = false;
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => SessionScreen()),
@@ -91,12 +117,18 @@ _updateQuestions() async{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget> [
                           Text(
-                          'Quit Session',)
+                          'Quit Session',
+                          style: TextStyle(
+                            fontFamily: 'CustomFont',
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold),
+                          )
                         ]
                       )
                     )
                   ));
     });
+    print("Questions Updated");
   }
 
   @override
@@ -123,32 +155,10 @@ _updateQuestions() async{
   }
 }
 
-class QuestionButton extends StatelessWidget {
-  QuestionButton({@required this.onPressed});
-
-  final GestureTapCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      fillColor: Colors.grey,
-      splashColor: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Text('Update Questions',
-            style: TextStyle(fontWeight: FontWeight.bold)),
-      ),
-      onPressed: onPressed,
-      shape: const StadiumBorder(),
-    );
-  }
-}
-
 class QuestionBox extends StatelessWidget {
   QuestionBox(this.username,this.question, this.numUpvotes);
 
-  final String question, username;
-  final int numUpvotes;
+  final String question, username, numUpvotes;
 
   @override
   Widget build(BuildContext context) {
@@ -157,23 +167,26 @@ class QuestionBox extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Container(
+              child: Text(question,
+                maxLines: 3,
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: 70),
+              ),
+            ),
             Row(
               children: <Widget>[
-                Text(question)
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 5),
-            ),
-            Row(
-              children: <Widget>[
-                Image.asset('assets/userLogo.png',width: 30,height: 30),
+                Image.asset('assets/userLogo.png',width: 60,height: 60),
                 Padding(
                   padding: EdgeInsets.only(left: 5),
                 ),
                 Expanded(
-                  child: Text(username),
+                  child: Text(username,
+                    style: TextStyle(
+                      fontSize: 70)),
                 ),
                 Upvote(numUpvotes)
               ],
@@ -190,7 +203,7 @@ class QuestionBox extends StatelessWidget {
 
 class Upvote extends StatefulWidget {
   Upvote(this.numVotes);
-  final int numVotes;
+  final String numVotes;
   @override
   State<StatefulWidget> createState() {
     return UpvoteState(numVotes);
@@ -200,15 +213,17 @@ class Upvote extends StatefulWidget {
 class UpvoteState extends State<Upvote> {
   
   UpvoteState(this.numVotes);
-  final int numVotes;
+  final String numVotes;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Icon(Icons.favorite),
-        SizedBox(width: 3),
-        Text('$numVotes'),
+        Icon(Icons.favorite, size: 60),
+        SizedBox(width: 10),
+        Text(numVotes,
+          style: TextStyle(
+            fontSize: 70),),
       ],
     );
   }
