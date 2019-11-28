@@ -43,7 +43,6 @@ class QuestionsPageState extends State<QuestionsPageAdmin> {
   displayQuestions() async {
     List<Question> questions = await retrieveQuestions(sessionCode);
     for (Question question in questions) {
-      children.add(Padding(padding: const EdgeInsets.only(top: 10)));
       children.add(QuestionBox(question.text, question.user));
     }
     setState(() {});
@@ -54,7 +53,6 @@ class QuestionsPageState extends State<QuestionsPageAdmin> {
     Question question = Question(username, text, 0, sessionCode);
     addQuestion(question);
     setState(() {
-      children.add(Padding(padding: const EdgeInsets.only(top: 10)));
       children.add(QuestionBox(text, username));
       t1.text = '';
     });
@@ -153,41 +151,47 @@ class QuestionBoxState extends State<QuestionBox> {
     if(!visible) {
       return SizedBox.shrink();
     }
-    return Container(
-      padding: const EdgeInsets.all(7),
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: 400,
-              child: Text(question),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 20),
-            ),
-            Row(
+    return Column(
+      children: <Widget>[
+        Padding(padding: const EdgeInsets.only(top:10)),
+        Container(
+          padding: const EdgeInsets.all(7),
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
               children: <Widget>[
-                Text(username),
-                Spacer(),
-                IconButton(
-                  icon: Icon(Icons.cancel),
-                  onPressed: () {
-                    _eraseQuestion();
-                    deleteQuestion(
-                        Question(username, question, 0, sessionCode));
-                  },
+
+        Container(
+                  width: 400,
+                  child: Text(question),
                 ),
-                Upvote(),
-                Padding(padding: EdgeInsets.only(right: 10))
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(username),
+                    Spacer(),
+                    IconButton(
+                      icon: Icon(Icons.cancel),
+                      onPressed: () {
+                        _eraseQuestion();
+                        deleteQuestion(
+                            Question(username, question, 0, sessionCode));
+                      },
+                    ),
+                    Upvote(),
+                    Padding(padding: EdgeInsets.only(right: 10))
+                  ],
+                )
               ],
-            )
-          ],
+            ),
+          ),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
         ),
-      ),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      ],
     );
   }
 }
