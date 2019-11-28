@@ -42,8 +42,13 @@ Question parseQuestion(String data) {
   int questionIndex = data.indexOf('question:') + 10; // index where the question starts
   int sessionIndex = data.indexOf('session:');
   String question = data.substring(questionIndex, sessionIndex - 2); // now the question starts at position 0
-  int sessionC = int.parse(data.substring(sessionIndex + 9)); //
-  return new Question(username, question, 0, sessionC);
+  int likesIndex = data.indexOf('likesCount:');
+  String likesPart = data.substring(likesIndex + 12);
+  int sessionC = int.parse(data.substring(sessionIndex + 9, likesIndex - 2)); //
+  int likesCount = 0;
+  if(likesPart != 'null') likesCount = int.parse(likesPart);
+
+  return new Question(username, question, likesCount, sessionC);
 }
 
 /* Converts a list of Strings into a list of Questions. */
@@ -71,3 +76,5 @@ void deleteQuestion(Question question) {
   http.post(url,
       body: {"username": question.user, "question" : question.text, "session" : question.session.toString()});
 }
+
+void updateLikes(int likesCount) {}

@@ -37,13 +37,13 @@ class QuestionsPageState extends State<QuestionsPageAdmin> {
   @override
   void initState() {
     super.initState();
-    displayQuestions();
+    getQuestions();
   }
 
-  displayQuestions() async {
+  getQuestions() async {
     List<Question> questions = await retrieveQuestions(sessionCode);
     for (Question question in questions) {
-      children.add(QuestionBox(question.text, question.user));
+      children.add(QuestionBox(question));
     }
     setState(() {});
   }
@@ -53,7 +53,7 @@ class QuestionsPageState extends State<QuestionsPageAdmin> {
     Question question = Question(username, text, 0, sessionCode);
     addQuestion(question);
     setState(() {
-      children.add(QuestionBox(text, username));
+      children.add(QuestionBox(question));
       t1.text = '';
     });
     Navigator.of(context).pop();
@@ -124,20 +124,27 @@ class QuestionButton extends StatelessWidget {
 }
 
 class QuestionBox extends StatefulWidget {
-  QuestionBox(this.question, this.username);
-  final String question;
-  final String username;
+  QuestionBox(this.question);
+
+  final Question question;
+
   @override
   State<StatefulWidget> createState() {
-    return QuestionBoxState(this.question, this.username);
+    return QuestionBoxState(this.question);
   }
 }
 
 class QuestionBoxState extends State<QuestionBox> {
-  QuestionBoxState(this.question, this.username);
+  QuestionBoxState(Question question) {
+    this.username = question.user;
+    this.question = question.text;
+    this.likesCount = question.likesCount;
+  }
 
-  final String question;
-  final String username;
+  String question;
+  String username;
+  int likesCount;
+
   bool visible = true;
 
   _eraseQuestion() {
@@ -177,10 +184,10 @@ class QuestionBoxState extends State<QuestionBox> {
                       onPressed: () {
                         _eraseQuestion();
                         deleteQuestion(
-                            Question(username, question, 0, sessionCode));
+                            Question(username, question, likesCount, sessionCode));
                       },
                     ),
-                    Upvote(),
+                    Upvote(likesCount),
                     Padding(padding: EdgeInsets.only(right: 10))
                   ],
                 )
@@ -197,15 +204,22 @@ class QuestionBoxState extends State<QuestionBox> {
 }
 
 class Upvote extends StatefulWidget {
+  Upvote(this.likesCount);
+
+  final int likesCount;
+
   @override
   State<StatefulWidget> createState() {
-    return UpvoteState();
+    return UpvoteState(likesCount);
   }
 }
 
 class UpvoteState extends State<Upvote> {
+  UpvoteState(int likesCount) {
+    this._num_votes = likesCount;
+  }
   // ignore: non_constant_identifier_names
-  int _num_votes = 132;
+  int _num_votes;
   bool liked = false;
 
   _pressed() {
@@ -215,6 +229,8 @@ class UpvoteState extends State<Upvote> {
       else
         _num_votes++;
       liked = !liked;
+
+      updateLikes(_num_votes);
     });
   }
 
