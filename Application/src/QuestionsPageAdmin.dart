@@ -10,12 +10,12 @@ int sessionCode = 0;
 String username;
 List<Widget> children;
 
-
 class QuestionsPageAdmin extends StatefulWidget {
   QuestionsPageAdmin(int code, String user) {
     sessionCode = code;
     username = user;
   }
+
   @override
   State<StatefulWidget> createState() {
     return QuestionsPageState();
@@ -23,7 +23,6 @@ class QuestionsPageAdmin extends StatefulWidget {
 }
 
 class QuestionsPageState extends State<QuestionsPageAdmin> {
-
   QuestionsPageState() {
     children = [
       Padding(padding: const EdgeInsets.only(top: 20)),
@@ -41,9 +40,9 @@ class QuestionsPageState extends State<QuestionsPageAdmin> {
     displayQuestions();
   }
 
-  displayQuestions() async{
+  displayQuestions() async {
     List<Question> questions = await retrieveQuestions(sessionCode);
-    for(Question question in questions) {
+    for (Question question in questions) {
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
       children.add(QuestionBox(question.text, question.user));
     }
@@ -51,8 +50,7 @@ class QuestionsPageState extends State<QuestionsPageAdmin> {
   }
 
   _submitQuestion(BuildContext context, String text) {
-    if (text.length == 0)
-      return;
+    if (text.length == 0) return;
     Question question = Question(username, text, 0, sessionCode);
     addQuestion(question);
     setState(() {
@@ -68,7 +66,7 @@ class QuestionsPageState extends State<QuestionsPageAdmin> {
     //displayQuestions();
     return Scaffold(
         floatingActionButton:
-        QuestionButton(onPressed: () => _displayDialog(context)),
+            QuestionButton(onPressed: () => _displayDialog(context)),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: SingleChildScrollView(
           child: Container(
@@ -154,7 +152,10 @@ class QuestionBox extends StatelessWidget {
                 Spacer(),
                 IconButton(
                   icon: Icon(Icons.cancel),
-                  onPressed: (){},
+                  onPressed: () {
+                    deleteQuestion(
+                        Question(username, question, 0, sessionCode));
+                  },
                 ),
                 Upvote(),
                 Padding(padding: EdgeInsets.only(right: 10))
@@ -186,7 +187,8 @@ class UpvoteState extends State<Upvote> {
     setState(() {
       if (liked)
         _num_votes--;
-      else _num_votes++;
+      else
+        _num_votes++;
       liked = !liked;
     });
   }
