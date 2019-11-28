@@ -125,14 +125,34 @@ class QuestionButton extends StatelessWidget {
   }
 }
 
-class QuestionBox extends StatelessWidget {
+class QuestionBox extends StatefulWidget {
   QuestionBox(this.question, this.username);
+  final String question;
+  final String username;
+  @override
+  State<StatefulWidget> createState() {
+    return QuestionBoxState(this.question, this.username);
+  }
+}
+
+class QuestionBoxState extends State<QuestionBox> {
+  QuestionBoxState(this.question, this.username);
 
   final String question;
   final String username;
+  bool visible = true;
+
+  _eraseQuestion() {
+    setState(() {
+      visible = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if(!visible) {
+      return SizedBox.shrink();
+    }
     return Container(
       padding: const EdgeInsets.all(7),
       child: SizedBox(
@@ -153,6 +173,7 @@ class QuestionBox extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.cancel),
                   onPressed: () {
+                    _eraseQuestion();
                     deleteQuestion(
                         Question(username, question, 0, sessionCode));
                   },
