@@ -10,8 +10,8 @@ int sessionCode = 0;
 String username;
 List<Widget> children;
 
-class QuestionsPageAdmin extends StatefulWidget {
-  QuestionsPageAdmin(int code, String user) {
+class AdminQuestionsPage extends StatefulWidget {
+  AdminQuestionsPage(int code, String user) {
     sessionCode = code;
     username = user;
   }
@@ -22,7 +22,7 @@ class QuestionsPageAdmin extends StatefulWidget {
   }
 }
 
-class QuestionsPageState extends State<QuestionsPageAdmin> {
+class QuestionsPageState extends State<AdminQuestionsPage> {
   QuestionsPageState() {
     children = [
       Padding(padding: const EdgeInsets.only(top: 20)),

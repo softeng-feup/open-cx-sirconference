@@ -1,8 +1,8 @@
-import 'package:esof/registration.dart';
+import 'package:esof/Registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'authentication.dart';
+import 'Authentication.dart';
 
 class SignUpPage extends StatefulWidget {
   @override

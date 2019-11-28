@@ -1,7 +1,7 @@
 import 'package:esof/QuestionsPage.dart';
 import 'package:esof/SessionScreen.dart';
 import 'package:esof/SignUpPage.dart';
-import 'package:esof/authentication.dart';
+import 'package:esof/Authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

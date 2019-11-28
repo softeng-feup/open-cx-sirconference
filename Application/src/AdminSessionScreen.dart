@@ -2,7 +2,7 @@ import 'package:esof/QuestionsPage.dart';
 import 'package:esof/sessionsManegement.dart';
 import 'package:flutter/material.dart';
 
-import 'QuestionsPageAdmin.dart';
+import 'AdminQuestionsPage.dart';
 
 String username;
 
@@ -136,7 +136,7 @@ class InputState extends State<InputSection> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => QuestionsPageAdmin(code, username)),
+          builder: (context) => AdminQuestionsPage(code, username)),
     );
   }
 
