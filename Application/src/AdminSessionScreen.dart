@@ -217,7 +217,7 @@ class AdminSessionManagement extends StatelessWidget {
           return AlertDialog(
             title: Text('Delete a session'),
             content: TextField(
-              decoration: InputDecoration(hintText: 'Type here'),
+              decoration: InputDecoration(hintText: 'Session Code'),
               controller: t2,
             ),
             actions: <Widget>[

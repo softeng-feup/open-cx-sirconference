@@ -12,7 +12,6 @@ class QuestionsPage extends StatefulWidget {
   QuestionsPage(int code, String user) {
     sessionCode = code;
     username = user;
-    print(sessionCode);
   }
   @override
   State<StatefulWidget> createState() {

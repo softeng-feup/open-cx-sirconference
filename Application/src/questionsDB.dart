@@ -64,3 +64,10 @@ void addQuestion(Question question) {
   http.post(url,
       body: {"username": question.user, "question" : question.text, "session" : question.session.toString()});
 }
+
+/* Deletes a question from the database. */
+void deleteQuestion(Question question) {
+  var url = "https://esof.000webhostapp.com/deleteQuestion.php";
+  http.post(url,
+      body: {"username": question.user, "question" : question.text, "session" : question.session.toString()});
+}

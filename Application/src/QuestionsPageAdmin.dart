@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:esof/QuestionsPage.dart' as prefix0;
 import 'package:esof/questionsDB.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,6 @@ class QuestionsPageAdmin extends StatefulWidget {
   QuestionsPageAdmin(int code, String user) {
     sessionCode = code;
     username = user;
-    children = [
-      Padding(padding: const EdgeInsets.only(top: 20)),
-      Text("Session",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-      Image.asset('assets/signUpLine.png')
-    ];
   }
   @override
   State<StatefulWidget> createState() {
@@ -28,6 +23,15 @@ class QuestionsPageAdmin extends StatefulWidget {
 }
 
 class QuestionsPageState extends State<QuestionsPageAdmin> {
+
+  QuestionsPageState() {
+    children = [
+      Padding(padding: const EdgeInsets.only(top: 20)),
+      Text("Session",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+      Image.asset('assets/signUpLine.png')
+    ];
+  }
 
   final TextEditingController t1 = new TextEditingController();
 
@@ -150,11 +154,8 @@ class QuestionBox extends StatelessWidget {
                 Spacer(),
                 IconButton(
                   icon: Icon(Icons.cancel),
-                  onPressed: () {
-                    print(children.length);
-                    children.remove(this);
-                    print(children.length);
-                  },),
+                  onPressed: (){},
+                ),
                 Upvote(),
                 Padding(padding: EdgeInsets.only(right: 10))
               ],
