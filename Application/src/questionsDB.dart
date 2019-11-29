@@ -7,18 +7,27 @@ class Question {
   final text;
   int likesCount;
   final session;
+  bool liked;
   Question(this.user, this.text, int likesCount, this.session) {
     this.likesCount = likesCount;
+    this.liked = false;
   }
 }
 
 /* Gets the questions from the database, processing the received data and returning it in the form of a list. */
-Future<List<Question>> retrieveQuestions(int sessionCode) async {
-  var url = "https://esof.000webhostapp.com/getQuestions.php";
-  http.Response response = await http.get(url);
+Future<List<Question>> retrieveQuestions(int sessionCode, String username) async {
+  var url1 = "https://esof.000webhostapp.com/getLikedQuestions.php?username=" + username;
+  http.Response response = await http.get(url1);
   String data = json.decode(response.body).toString();
   List<String> questions = splitData(data);
-  return parseQuestions(questions, sessionCode); //
+  var url2 = "https://esof.000webhostapp.com/getNotLikedQuestions.php?username=" + username;
+  http.Response response2 = await http.get(url2);
+  String data2 = json.decode(response2.body).toString();
+  List<String> questions2 = splitData(data2);
+  List<Question> likedQuestions = parseQuestions(questions, sessionCode, true);
+  List<Question> notLikedQuestions = parseQuestions(questions2, sessionCode, false);
+  return likedQuestions + notLikedQuestions;
+
 }
 
 /* Receives a big string containing all the questions retrieved, splitting it into individual strings (one for each question). */
@@ -36,7 +45,7 @@ List<String> splitData(String data) {
 }
 
 /* Receives a string containing the data of a question, parsing it into an adequate struct. */
-Question parseQuestion(String data) {
+Question parseQuestion(String data, bool liked) {
   int usernameIndex = data.indexOf('username:') + 10; // index where the username string starts
   data = data.substring(usernameIndex); // now the username starts at position 0
   usernameIndex = data.indexOf(',') - 1; // index where the username string ends
@@ -49,18 +58,19 @@ Question parseQuestion(String data) {
   int sessionC = int.parse(data.substring(sessionIndex + 9, likesIndex - 2)); //
   int likesCount = 0;
   if(likesPart != 'null') likesCount = int.parse(likesPart);
-
-  return new Question(username, question, likesCount, sessionC);
+  Question quest = new Question(username, question, likesCount, sessionC);
+  quest.liked = liked;
+  return quest;
 }
 
 /* Converts a list of Strings into a list of Questions. */
-List<Question> parseQuestions(List<String> data, int code) { //
+List<Question> parseQuestions(List<String> data, int code, bool liked) { //
   List<Question> questions = [];
   for (var element in data) {
-    Question temp = parseQuestion(element); //
+    Question temp = parseQuestion(element, liked); //
     if(temp.session != code) //
       continue; //
-    questions.add(parseQuestion(element));
+    questions.add(parseQuestion(element, liked));
   }
   return questions;
 }
@@ -79,9 +89,16 @@ void deleteQuestion(Question question) {
       body: {"username": question.user, "question" : question.text, "session" : question.session.toString()});
 }
 
-/* Updates the likes associated with a question. */
-void updateLikes(Question question) {
-  var url = "https://esof.000webhostapp.com/updateLikes.php";
+/* Updates the likes associated with a question as well as adds a tuple to the UserLikesQuestion table. */
+void incrementLikes(Question question, String username) {
+  var url = "https://esof.000webhostapp.com/addUserLikesQuestion.php";
   http.post(url,
-      body: {"username": question.user, "question" : question.text, "session" : question.session.toString(), "likesCount" : question.likesCount.toString()});
+      body: {"user": username, "question" : question.text, "session" : question.session.toString() });
+}
+
+/* Updates the likes associated with a question as well as removes the matching tuple from the UserLikesQuestion table. */
+void decrementLikes(Question question, String username) {
+  var url = "https://esof.000webhostapp.com/deleteUserLikesQuestion.php";
+  http.post(url,
+      body: {"user": username, "question" : question.text, "session" : question.session.toString() });
 }

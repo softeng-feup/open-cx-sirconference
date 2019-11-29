@@ -41,7 +41,7 @@ class QuestionsPageState extends State<QuestionsPage> {
   }
 
   getQuestions() async {
-    List<Question> questions = await retrieveQuestions(sessionCode);
+    List<Question> questions = await retrieveQuestions(sessionCode, username);
     for (Question question in questions) {
       children.add(QuestionBox(question));
     }
@@ -203,23 +203,22 @@ class UpvoteState extends State<Upvote> {
     this.likesCount = question.likesCount;
   }
   // ignore: non_constant_identifier_names
-  int likesCount;
   Question question;
-  bool liked = false;
+  int likesCount;
 
   _pressed() {
     setState(() {
-      if (liked) {
+      if (question.liked) {
         question.likesCount--;
         likesCount--;
+        decrementLikes(question, username);
       }
       else {
         question.likesCount++;
         likesCount++;
+        incrementLikes(question, username);
       }
-      liked = !liked;
-
-      updateLikes(question);
+      question.liked = !question.liked;
     });
   }
 
@@ -228,7 +227,7 @@ class UpvoteState extends State<Upvote> {
     return Row(
       children: <Widget>[
         IconButton(
-          icon: Icon(liked ? Icons.favorite : Icons.favorite_border),
+          icon: Icon(question.liked ? Icons.favorite : Icons.favorite_border),
           onPressed: () => _pressed(),
         ),
         Text('$likesCount'),

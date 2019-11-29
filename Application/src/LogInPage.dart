@@ -5,9 +5,6 @@ import 'package:esof/Authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:http/http.dart' as http;
-import 'package:async/async.dart';
-import 'dart:async';
 
 import 'AdminSessionScreen.dart';
 
@@ -25,86 +22,33 @@ class LogInPageState extends State<LogInPage> {
   TextEditingController pwController = new TextEditingController();
 
   bool _authenticated = true;
-  bool connected = false;
-
-  Future<bool> checkConnectivity() async{
-    final url = "https://esof.000webhostapp.com/getQuestions.php";
-    http.Response response = await http.get(url);
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void _showDialog() {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("No Internet Connection"),
-          content: new Text("Check your internet connection."),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   asyncAuthenticate() async {
-    bool arrived = false;
-    connected = false;
-    var cancellableOperation = CancelableOperation.fromFuture(
-      checkConnectivity(),
-      onCancel: () => {},
-    );
-    cancellableOperation.value.then((value) => {
-      print("arrived"),
-      connected = value,
-      arrived = true,
-    });
-    Timer(Duration(seconds: 2), () async{
-      if (!arrived) {
-        print("timeout");
-        cancellableOperation.cancel();
-      }
-      if (connected) {
-        var inputUser = usernameController.text;
-        var inputPw = pwController.text;
-        LogInRequest req = new LogInRequest(inputUser, inputPw);
-        bool authenticated = await processLogInRequest(req);
-        _authenticated = authenticated;
-        if (authenticated) {
+    var inputUser = usernameController.text;
+    var inputPw = pwController.text;
+    LogInRequest req = new LogInRequest(inputUser, inputPw);
+    bool authenticated = await processLogInRequest(req);
+    _authenticated = authenticated;
+    if (authenticated) {
 
-          if (inputUser == 'admin')
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AdminSessionScreen(inputUser)),
-            );
-          else
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SessionScreen(inputUser)),
-            );
-        }
-      } else _showDialog();
-    });
+      if (inputUser == 'admin')
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AdminSessionScreen(inputUser)),
+        );
+      else
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SessionScreen(inputUser)),
+        );
+    }
   }
 
   authenticate() {
     setState(() {
       asyncAuthenticate();
     });
-    if (connected && !_authenticated) {
+    if (!_authenticated) {
       pwController.text = '';
       return showDialog(
           context: context,

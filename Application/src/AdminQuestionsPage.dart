@@ -41,7 +41,7 @@ class QuestionsPageState extends State<AdminQuestionsPage> {
   }
 
   getQuestions() async {
-    List<Question> questions = await retrieveQuestions(sessionCode);
+    List<Question> questions = await retrieveQuestions(sessionCode, username);
     for (Question question in questions) {
       children.add(QuestionBox(question));
     }
@@ -137,15 +137,9 @@ class QuestionBox extends StatefulWidget {
 class QuestionBoxState extends State<QuestionBox> {
   QuestionBoxState(Question question) {
     this.question = question;
-    this.username = question.user;
-    this.question = question.text;
-    this.likesCount = question.likesCount;
   }
 
   Question question;
-  String text;
-  String username;
-  int likesCount;
 
   bool visible = true;
 
@@ -172,7 +166,7 @@ class QuestionBoxState extends State<QuestionBox> {
 
         Container(
                   width: 400,
-                  child: Text(text),
+                  child: Text(question.text),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20),
@@ -186,7 +180,7 @@ class QuestionBoxState extends State<QuestionBox> {
                       onPressed: () {
                         _eraseQuestion();
                         deleteQuestion(
-                            Question(username, question, likesCount, sessionCode));
+                            Question(question.user, question.text, question.likesCount, sessionCode));
                       },
                     ),
                     Upvote(question),
@@ -223,22 +217,21 @@ class UpvoteState extends State<Upvote> {
   }
   // ignore: non_constant_identifier_names
   Question question;
-  bool liked = false;
   int likesCount;
 
   _pressed() {
     setState(() {
-      if (liked) {
+      if (question.liked) {
         question.likesCount--;
         likesCount--;
+        decrementLikes(question, username);
       }
       else {
         question.likesCount++;
         likesCount++;
+        incrementLikes(question, username);
       }
-      liked = !liked;
-
-      updateLikes(question);
+      question.liked = !question.liked;
     });
   }
 
@@ -247,7 +240,7 @@ class UpvoteState extends State<Upvote> {
     return Row(
       children: <Widget>[
         IconButton(
-          icon: Icon(liked ? Icons.favorite : Icons.favorite_border),
+          icon: Icon(question.liked ? Icons.favorite : Icons.favorite_border),
           onPressed: () => _pressed(),
         ),
         Text('$likesCount'),
