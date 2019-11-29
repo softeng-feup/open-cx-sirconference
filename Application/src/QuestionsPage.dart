@@ -136,12 +136,14 @@ class QuestionBox extends StatefulWidget {
 
 class QuestionBoxState extends State<QuestionBox> {
   QuestionBoxState(Question question) {
+    this.question = question;
     this.username = question.user;
-    this.question = question.text;
+    this.text = question.text;
     this.likesCount = question.likesCount;
   }
 
-  String question;
+  Question question;
+  String text;
   String username;
   int likesCount;
 
@@ -159,7 +161,7 @@ class QuestionBoxState extends State<QuestionBox> {
 
                 Container(
                   width: 400,
-                  child: Text(question),
+                  child: Text(text),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20),
@@ -168,7 +170,7 @@ class QuestionBoxState extends State<QuestionBox> {
                   children: <Widget>[
                     Text(username),
                     Spacer(),
-                    Upvote(likesCount),
+                    Upvote(question),
                     Padding(padding: EdgeInsets.only(right: 10))
                   ],
                 )
@@ -185,33 +187,39 @@ class QuestionBoxState extends State<QuestionBox> {
 }
 
 class Upvote extends StatefulWidget {
-  Upvote(this.likesCount);
+  Upvote(this.question);
 
-  final int likesCount;
+  final Question question;
 
   @override
   State<StatefulWidget> createState() {
-    return UpvoteState(likesCount);
+    return UpvoteState(question);
   }
 }
 
 class UpvoteState extends State<Upvote> {
-  UpvoteState(int likesCount) {
-    this._num_votes = likesCount;
+  UpvoteState(Question question) {
+    this.question = question;
+    this.likesCount = question.likesCount;
   }
   // ignore: non_constant_identifier_names
-  int _num_votes;
+  int likesCount;
+  Question question;
   bool liked = false;
 
   _pressed() {
     setState(() {
-      if (liked)
-        _num_votes--;
-      else
-        _num_votes++;
+      if (liked) {
+        question.likesCount--;
+        likesCount--;
+      }
+      else {
+        question.likesCount++;
+        likesCount++;
+      }
       liked = !liked;
 
-      updateLikes(_num_votes);
+      updateLikes(question);
     });
   }
 
@@ -223,7 +231,7 @@ class UpvoteState extends State<Upvote> {
           icon: Icon(liked ? Icons.favorite : Icons.favorite_border),
           onPressed: () => _pressed(),
         ),
-        Text('$_num_votes'),
+        Text('$likesCount'),
       ],
     );
   }

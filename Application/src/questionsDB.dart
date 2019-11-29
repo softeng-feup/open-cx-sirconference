@@ -5,9 +5,11 @@ import 'package:http/http.dart' as http;
 class Question {
   final user;
   final text;
-  final likesCount;
+  int likesCount;
   final session;
-  const Question(this.user, this.text, this.likesCount, this.session);
+  Question(this.user, this.text, int likesCount, this.session) {
+    this.likesCount = likesCount;
+  }
 }
 
 /* Gets the questions from the database, processing the received data and returning it in the form of a list. */
@@ -77,4 +79,9 @@ void deleteQuestion(Question question) {
       body: {"username": question.user, "question" : question.text, "session" : question.session.toString()});
 }
 
-void updateLikes(int likesCount) {}
+/* Updates the likes associated with a question. */
+void updateLikes(Question question) {
+  var url = "https://esof.000webhostapp.com/updateLikes.php";
+  http.post(url,
+      body: {"username": question.user, "question" : question.text, "session" : question.session.toString(), "likesCount" : question.likesCount.toString()});
+}
