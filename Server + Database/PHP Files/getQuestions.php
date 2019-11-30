@@ -1,7 +1,8 @@
 <?php
 include 'db.php';
+header("Access-Control-Allow-Origin: *");
 
-$queryResult = $db->query("SELECT * FROM questions") or die($db->error);
+$queryResult = $db->query("SELECT * FROM questions ORDER BY `likesCount` DESC ") or die($db->error);
 
 $result = array();
 
