@@ -5,6 +5,9 @@ import 'package:esof/Authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:http/http.dart' as http;
+import 'package:async/async.dart';
+import 'dart:async';
 
 import 'AdminSessionScreen.dart';
 
@@ -22,6 +25,65 @@ class LogInPageState extends State<LogInPage> {
   TextEditingController pwController = new TextEditingController();
 
   bool _authenticated = true;
+  bool connected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkConnectivity();
+  }
+
+  void checkConnectivity() {
+    bool arrived = false;
+    connected = false;
+    var cancellableOperation = CancelableOperation.fromFuture(
+      getConnectionStatus(),
+      onCancel: () => {},
+    );
+    cancellableOperation.value.then((value) => {
+      connected = value,
+      arrived = true,
+    });
+    Timer(Duration(seconds: 4), () async{
+      if (!arrived) {
+        cancellableOperation.cancel();
+      }
+      if (!connected) _showNoConnectionDialog();
+    });
+  }
+
+  Future<bool> getConnectionStatus() async{
+    final url = "https://esof.000webhostapp.com/getQuestions.php";
+    http.Response response = await http.get(url);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void _showNoConnectionDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("No Internet Connection"),
+          content: new Text("Check your internet connection."),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   asyncAuthenticate() async {
     var inputUser = usernameController.text;
@@ -30,7 +92,6 @@ class LogInPageState extends State<LogInPage> {
     bool authenticated = await processLogInRequest(req);
     _authenticated = authenticated;
     if (authenticated) {
-
       if (inputUser == 'admin')
         Navigator.push(
           context,
@@ -55,7 +116,7 @@ class LogInPageState extends State<LogInPage> {
           builder: (context)
           {
             return AlertDialog(
-                title: Text('Wrong username or password',
+              title: Text('Wrong username or password',
                   style: TextStyle(fontSize: 18)),
             );
           });
