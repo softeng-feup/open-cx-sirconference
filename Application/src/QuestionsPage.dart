@@ -11,28 +11,36 @@ String username;
 List<Widget> children;
 
 class QuestionsPage extends StatefulWidget {
+  final QuestionsPageState qps = new QuestionsPageState();
+
   QuestionsPage(int code, String user) {
     sessionCode = code;
     username = user;
   }
 
+  getQuestions() {
+    qps.getQuestions();
+  }
+
+  setActive(){
+    qps.setActive();
+  }
+
+  bool getActive() {
+    return qps.getActive();
+  }
+
   @override
   State<StatefulWidget> createState() {
-    return QuestionsPageState();
+    return qps;
   }
 }
 
 class QuestionsPageState extends State<QuestionsPage> {
-  QuestionsPageState() {
-    children = [
-      Padding(padding: const EdgeInsets.only(top: 20)),
-      Text("Session",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-      Image.asset('assets/signUpLine.png')
-    ];
-  }
 
   final TextEditingController t1 = new TextEditingController();
+  bool active;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -40,12 +48,31 @@ class QuestionsPageState extends State<QuestionsPage> {
     getQuestions();
   }
 
+  setActive() {
+    active = true;
+  }
+
+  bool getActive() {
+    return active;
+  }
+
   getQuestions() async {
+    setState(() {
+      isLoading = true;
+    });
     List<Question> questions = await retrieveQuestions(sessionCode, username);
+    children = [
+      Padding(padding: const EdgeInsets.only(top: 20)),
+      Text("Session " + sessionCode.toString(),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+      Image.asset('assets/signUpLine.png')
+    ];
     for (Question question in questions) {
       children.add(QuestionBox(question));
     }
-    setState(() {});
+    setState(() {
+      isLoading = false;
+    });
   }
 
   _submitQuestion(BuildContext context, String text) {
@@ -61,19 +88,21 @@ class QuestionsPageState extends State<QuestionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    //displayQuestions();
     return Scaffold(
         floatingActionButton:
         QuestionButton(onPressed: () => _displayDialog(context)),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              children: children,
-            ),
-          ),
-        ));
+        body: isLoading
+            ? Center (child: CircularProgressIndicator(),)
+            : SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    children: children,
+                  ),
+                ),
+              )
+    );
   }
 
   _displayDialog(BuildContext context) {
@@ -99,6 +128,12 @@ class QuestionsPageState extends State<QuestionsPage> {
             ],
           );
         });
+  }
+
+  @override
+  void dispose() {
+    active = false;
+    super.dispose();
   }
 }
 

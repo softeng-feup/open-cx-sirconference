@@ -1,5 +1,6 @@
 import 'package:esof/QuestionsPage.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 String username;
 
@@ -121,9 +122,15 @@ class InputState extends State<InputSection>{
 
   joinSession() {
     int code = int.parse(controller.text);
+    final QuestionsPage questionsPage = new QuestionsPage(code, username);
+    questionsPage.setActive();
+    Timer.periodic(Duration(seconds: 20), (timer) {
+      if (questionsPage.getActive())
+        questionsPage.getQuestions();
+    });
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QuestionsPage(code, username)),
+      MaterialPageRoute(builder: (context) => questionsPage),
     );
   }
 
