@@ -47,9 +47,7 @@ class ChangeUsernameState extends State<ChangeUsernamePage> {
   }
 
   authenticate() async{
-    setState(() {
-      asyncAuthenticate();
-    });
+    await asyncAuthenticate();
     if (!_authenticated) {
       pwController.text = '';
       return showDialog(

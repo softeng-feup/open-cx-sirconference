@@ -48,10 +48,8 @@ class ChangePasswordState extends State<ChangePasswordPage> {
     _authenticated = authenticated;
   }
 
-  authenticate() {
-    setState(() {
-      asyncAuthenticate();
-    });
+  authenticate() async {
+    await asyncAuthenticate();
     if (!_authenticated) {
       pwController.text = '';
       return showDialog(
