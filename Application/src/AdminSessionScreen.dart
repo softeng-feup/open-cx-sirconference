@@ -1,6 +1,7 @@
 import 'package:esof/QuestionsPage.dart';
 import 'package:esof/sessionsManegement.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 import 'AdminQuestionsPage.dart';
 
@@ -133,10 +134,16 @@ class InputState extends State<InputSection> {
 
   joinSession() {
     int code = int.parse(controller.text);
+    final AdminQuestionsPage questionsPage = new AdminQuestionsPage(code, username);
+    questionsPage.setActive();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (questionsPage.getActive())
+        questionsPage.getQuestions();
+    });
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => AdminQuestionsPage(code, username)),
+          builder: (context) => questionsPage),
     );
   }
 
