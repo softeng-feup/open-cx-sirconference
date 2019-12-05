@@ -136,7 +136,7 @@ class InputState extends State<InputSection> {
     int code = int.parse(controller.text);
     final AdminQuestionsPage questionsPage = new AdminQuestionsPage(code, username);
     questionsPage.setActive();
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(Duration(seconds: 10), (timer) {
       if (questionsPage.getActive())
         questionsPage.getQuestions();
     });

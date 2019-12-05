@@ -93,7 +93,9 @@ class QuestionsPageState extends State<AdminQuestionsPage> {
         floatingActionButton:
             QuestionButton(onPressed: () => _displayDialog(context)),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body:
+        body: isLoading
+            ? Center (child: CircularProgressIndicator(),)
+        :
         SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(15),
@@ -265,6 +267,7 @@ class UpvoteState extends State<Upvote> {
         question.likesCount++;
         likesCount++;
         incrementLikes(question, username);
+        print('passou o increment');
       }
       question.liked = !question.liked;
     });
