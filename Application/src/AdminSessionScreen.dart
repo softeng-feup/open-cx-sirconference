@@ -1,9 +1,11 @@
+import 'package:esof/LogInPage.dart';
 import 'package:esof/QuestionsPage.dart';
 import 'package:esof/sessionsManegement.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'AdminQuestionsPage.dart';
+import 'EditProfilePage.dart';
 
 String username;
 
@@ -72,9 +74,29 @@ class AdminSessionScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Spacer(),
-                  Image.asset(
-                    'assets/settings.png',
-                    height: 35,
+                  Center(
+                    child: FloatingActionButton(
+                      backgroundColor: Colors.white,
+                      elevation: 0,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EditProfilePage(username)),
+                        );
+                      },
+                      child: new Container(
+                        width: 60.0,
+                        height: 60.0,
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: new DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage(
+                                  'assets/settings.png',
+                                )
+                            )
+                        )),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: 20),
