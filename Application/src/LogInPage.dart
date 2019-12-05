@@ -1,5 +1,3 @@
-import 'package:esof/QuestionsPage.dart';
-import 'package:esof/SessionScreen.dart';
 import 'package:esof/SignUpPage.dart';
 import 'package:esof/Authentication.dart';
 import 'package:flutter/cupertino.dart';
@@ -92,15 +90,9 @@ class LogInPageState extends State<LogInPage> {
     bool authenticated = await processLogInRequest(req);
     _authenticated = authenticated;
     if (authenticated) {
-      if (inputUser == 'admin')
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AdminSessionScreen(inputUser)),
-        );
-      else
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SessionScreen(inputUser)),
         );
     }
   }

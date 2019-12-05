@@ -132,9 +132,13 @@ class InputState extends State<InputSection> {
 
   InputState(this._text);
 
-  joinSession() {
+  joinSession() async {
     int code = int.parse(controller.text);
-    final AdminQuestionsPage questionsPage = new AdminQuestionsPage(code, username);
+    var questionsPage;
+    bool admin = await isAdmin(code.toString(), username);
+    if(admin)
+      questionsPage = new AdminQuestionsPage(code, username);
+    else questionsPage = new QuestionsPage(code, username);
     questionsPage.setActive();
     Timer.periodic(Duration(seconds: 10), (timer) {
       if (questionsPage.getActive())
