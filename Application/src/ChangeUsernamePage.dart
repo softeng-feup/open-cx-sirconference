@@ -26,7 +26,7 @@ class ChangeUsernameState extends State<ChangeUsernamePage> {
   var inputPw;
   var inputNewUser;
 
-  bool _authenticated = false;
+  bool _authenticated = true;
 
   changeUsername() async{
     inputUser = usernameController.text;

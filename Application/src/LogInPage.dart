@@ -6,10 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:async/async.dart';
 import 'dart:async';
-
 import 'AdminSessionScreen.dart';
-
-
 
 class LogInPage extends StatefulWidget {
   @override
@@ -97,10 +94,9 @@ class LogInPageState extends State<LogInPage> {
     }
   }
 
-  authenticate() {
-    setState(() {
-      asyncAuthenticate();
-    });
+  authenticate() async {
+    await asyncAuthenticate();
+
     if (!_authenticated) {
       pwController.text = '';
       return showDialog(
