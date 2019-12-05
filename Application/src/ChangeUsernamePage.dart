@@ -1,4 +1,4 @@
-import 'package:esof/Registration.dart';
+import 'package:esof/registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +35,7 @@ class ChangeUsernameState extends State<ChangeUsernamePage> {
     if (inputUser == inputNewUser) {sameUserName(); return;}
     await authenticate();
     if (_authenticated)
-      print("CALL FUNCTION TO CHANGE USERNAME HERE");
+      updateUsername(inputUser, inputNewUser);
   }
 
   asyncAuthenticate() async {

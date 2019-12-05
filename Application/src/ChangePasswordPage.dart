@@ -1,4 +1,4 @@
-import 'package:esof/Registration.dart';
+import 'package:esof/registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,7 @@ class ChangePasswordState extends State<ChangePasswordPage> {
     print(inputPw);
     await authenticate();
     if (_authenticated)
-      print("CALL FUNCTION TO CHANGE PASSWORD HERE");
+      updatePassword(inputUser, inputNewPw);
   }
 
   asyncAuthenticate() async {
