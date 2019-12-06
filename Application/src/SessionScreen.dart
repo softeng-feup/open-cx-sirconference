@@ -9,10 +9,10 @@ import 'EditProfilePage.dart';
 
 String username;
 
-class AdminSessionScreen extends StatelessWidget {
+class SessionScreen extends StatelessWidget {
   final String _username;
 
-  AdminSessionScreen(this._username) {
+  SessionScreen(this._username) {
     username = this._username;
   }
 

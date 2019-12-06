@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:async/async.dart';
 import 'dart:async';
-import 'AdminSessionScreen.dart';
+import 'SessionScreen.dart';
 
 class LogInPage extends StatefulWidget {
   @override
@@ -89,7 +89,7 @@ class LogInPageState extends State<LogInPage> {
     if (authenticated) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AdminSessionScreen(inputUser)),
+          MaterialPageRoute(builder: (context) => SessionScreen(inputUser)),
         );
     }
   }

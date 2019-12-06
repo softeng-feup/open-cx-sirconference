@@ -24,25 +24,25 @@ class SignUpPageState extends State<SignUpPage> {
 
   bool _existsUsername = true;
 
-  register() {
+  register() async {
     inputUser = usernameController.text;
     inputPw = pwController.text;
     inputConfirmPw = pwConfirmController.text;
     safeQuestion = safequestionController.text;
     if (inputPw != inputConfirmPw) {passwordsNoMatch(); return;}
-    verifyUsername();
+    await verifyUsername();
     if (!_existsUsername)
-      addUser(SignUpRequest(inputUser, inputPw));
+      addUser(SignUpRequest(inputUser, inputPw, safeQuestion));
   }
 
   asyncVerification() async {
     _existsUsername = await checkIfUsernameExists(inputUser);
   }
 
-  verifyUsername() {
-    setState(() {
-      asyncVerification();
-    });
+  verifyUsername() async {
+    print('chegou ao assync v');
+    await asyncVerification();
+    print('passou o assync');
     if (_existsUsername) {
       return showDialog(
           context: context,

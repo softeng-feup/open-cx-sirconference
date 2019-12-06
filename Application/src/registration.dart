@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 class SignUpRequest {
   final username;
   final password;
-  const SignUpRequest(this.username, this.password);
+  final safeAnswer;
+  const SignUpRequest(this.username, this.password, this.safeAnswer);
 }
 
 /* Adds an user to the database after encrypting the password. */
@@ -15,7 +16,7 @@ void addUser(SignUpRequest req) {
   String cryptPassword = sha256.convert(bytes).toString();
   var url = "https://esof.000webhostapp.com/addUser.php";
   http.post(url,
-      body: {"username": req.username, "password" : cryptPassword});
+      body: {"username": req.username, "password" : cryptPassword, "safeAnswer": req.safeAnswer});
 }
 
 /* Checks if a username already exists in the database */
