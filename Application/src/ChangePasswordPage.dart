@@ -26,7 +26,7 @@ class ChangePasswordState extends State<ChangePasswordPage> {
   var inputPw;
   var inputNewPw;
 
-  bool _authenticated = false;
+  bool _authenticated = true;
 
   changePassword() async{
     inputUser = usernameController.text;
@@ -82,7 +82,7 @@ class ChangePasswordState extends State<ChangePasswordPage> {
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 100),
+                padding: const EdgeInsets.only(top: 50),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -33,7 +33,7 @@ class EditProfilePageState extends State<EditProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Container(
-              padding: EdgeInsets.only(top: 100),
+              padding: const EdgeInsets.only(top: 50),
               child: Text(
                 'Conference\nManager',
                 style: TextStyle(

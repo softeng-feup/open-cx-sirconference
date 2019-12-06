@@ -117,7 +117,7 @@ class LogInPageState extends State<LogInPage> {
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 100),
+                padding: const EdgeInsets.only(top: 50),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

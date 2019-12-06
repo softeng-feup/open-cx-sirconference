@@ -15,10 +15,12 @@ class SignUpPageState extends State<SignUpPage> {
   TextEditingController usernameController = new TextEditingController();
   TextEditingController pwController = new TextEditingController();
   TextEditingController pwConfirmController = new TextEditingController();
+  TextEditingController safequestionController = new TextEditingController();
 
   var inputUser;
   var inputPw;
   var inputConfirmPw;
+  var safeQuestion;
 
   bool _existsUsername = true;
 
@@ -26,6 +28,7 @@ class SignUpPageState extends State<SignUpPage> {
     inputUser = usernameController.text;
     inputPw = pwController.text;
     inputConfirmPw = pwConfirmController.text;
+    safeQuestion = safequestionController.text;
     if (inputPw != inputConfirmPw) {passwordsNoMatch(); return;}
     verifyUsername();
     if (!_existsUsername)
@@ -71,7 +74,7 @@ class SignUpPageState extends State<SignUpPage> {
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(top: 100),
+        padding: const EdgeInsets.only(top: 50),
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -145,6 +148,25 @@ class SignUpPageState extends State<SignUpPage> {
                       border: OutlineInputBorder(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(0.1))))),
+              Padding(
+                padding: const EdgeInsets.only(top: 25),
+              ),
+              TextField(
+                  controller: safequestionController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 10),
+                      hintText: 'favorite color',
+                      hintStyle: TextStyle(
+                          fontFamily: 'CustomFont',
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                      border: new OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(0.2),
+                        ),
+                      ))),
               Padding(
                 padding: const EdgeInsets.only(top: 25),
               ),
