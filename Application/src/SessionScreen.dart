@@ -9,6 +9,18 @@ import 'EditProfilePage.dart';
 
 String username;
 
+void alertAnonymous(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context)
+      {
+        return AlertDialog(
+          title: Text('     You are not logged in!',
+              style: TextStyle(fontSize: 18)),
+        );
+      });
+}
+
 class SessionScreen extends StatelessWidget {
   final String _username;
 
@@ -79,10 +91,16 @@ class SessionScreen extends StatelessWidget {
                       backgroundColor: Colors.white,
                       elevation: 0,
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => EditProfilePage(username)),
-                        );
+                        if (username != "Anonymous") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                                EditProfilePage(username)),
+                          );
+                        }
+                        else {
+                          alertAnonymous(context);
+                        }
                       },
                       child: new Container(
                         width: 60.0,
@@ -281,7 +299,11 @@ class AdminSessionManagement extends StatelessWidget {
         SizedBox(
           height: 50,
           child: RaisedButton(
-              onPressed: () => _displayCreateDialog(context),
+              onPressed: () {
+                if (username != "Anonymous")
+                  _displayCreateDialog(context);
+                else alertAnonymous(context);
+              },
               child: Text(
                 'Create a new session',
                 style: TextStyle(fontSize: 15),
@@ -291,7 +313,11 @@ class AdminSessionManagement extends StatelessWidget {
         SizedBox(
           height: 50,
           child: RaisedButton(
-              onPressed: () => _displayDeleteDialog(context),
+              onPressed: () {
+                if (username != "Anonymous")
+                  _displayDeleteDialog(context);
+                else alertAnonymous(context);
+              },
               child: Text(
                 'Delete a session',
                 style: TextStyle(fontSize: 15),

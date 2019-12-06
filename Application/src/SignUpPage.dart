@@ -1,4 +1,4 @@
-import 'package:esof/Registration.dart';
+import 'package:esof/registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

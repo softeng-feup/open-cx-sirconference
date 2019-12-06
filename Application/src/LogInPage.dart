@@ -199,21 +199,19 @@ class LogInPageState extends State<LogInPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 20),
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset(
-                      'assets/fbLogo.png',
-                      height: 25,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                    ),
-                    Text('Login with Facebook',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500)),
-                  ]),
+              RawMaterialButton(
+                onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SessionScreen("Anonymous")),
+                    );
+                },
+                child: Text('Log in as guest',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500)),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 70),
               ),
