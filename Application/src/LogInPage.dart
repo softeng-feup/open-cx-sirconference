@@ -21,6 +21,7 @@ class LogInPageState extends State<LogInPage> {
 
   bool _authenticated = true;
   bool connected = false;
+  String prePassword;
 
   @override
   void initState() {
@@ -86,29 +87,35 @@ class LogInPageState extends State<LogInPage> {
     LogInRequest req = new LogInRequest(inputUser, inputPw);
     bool authenticated = await processLogInRequest(req);
     _authenticated = authenticated;
-    if (authenticated) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SessionScreen(inputUser)),
-        );
-    }
   }
 
   authenticate() async {
-    await asyncAuthenticate();
-
-    if (!_authenticated) {
-      pwController.text = '';
-      return showDialog(
-          context: context,
-          builder: (context)
-          {
-            return AlertDialog(
-              title: Text('Wrong username or password',
-                  style: TextStyle(fontSize: 18)),
-            );
-          });
+    if(preLogin(pwController.text, prePassword)) {
+      _authenticated = true;
+      print("prelog");
     }
+    else {
+      print("assync");
+      await asyncAuthenticate();
+    }
+
+    if (_authenticated) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SessionScreen(usernameController.text)),
+      );
+    } else {
+        pwController.text = '';
+        return showDialog(
+            context: context,
+            builder: (context)
+            {
+              return AlertDialog(
+                title: Text('Wrong username or password',
+                    style: TextStyle(fontSize: 18)),
+              );
+            });
+      }
   }
 
   @override
@@ -143,6 +150,9 @@ class LogInPageState extends State<LogInPage> {
                       TextField(
                           controller: usernameController,
                           keyboardType: TextInputType.emailAddress,
+                          onTap: () { // Safety purposes
+                            pwController.text = "";
+                          },
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 4.0, horizontal: 10),
@@ -163,6 +173,10 @@ class LogInPageState extends State<LogInPage> {
                           controller: pwController,
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
+                          onTap: () {
+                            var prePW = getUserData(usernameController.text);
+                            prePW.then((response) {prePassword = response;});
+                          },
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 4.0, horizontal: 10),

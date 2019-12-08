@@ -32,3 +32,12 @@ Future<bool> processLogInRequest(LogInRequest req) async {
     return true;
   return false;
 }
+
+/* Validates a pre-login.
+  A pre-login is an optimized way of logging in the user faster.
+ */
+bool preLogin(String typedPw, String actualPw) {
+  var bytes = utf8.encode(typedPw);
+  String cryptPassword = sha256.convert(bytes).toString();
+  return cryptPassword == actualPw;
+}
