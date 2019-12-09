@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,11 +39,24 @@ void updateUsername(String username, String newUsername) {
 
 /* Changes the password of a user, assigning it as 'newPassword' after the crypt sum is calculated. */
 void updatePassword(String username, String newPassword) {
-  print(username);
-  print(newPassword);
   var bytes = utf8.encode(newPassword);
   String cryptPassword = sha256.convert(bytes).toString();
   var url = "https://esof.000webhostapp.com/updatePassword.php";
   http.post(url,
       body: {"username": username, "newPassword" : cryptPassword});
 }
+
+/* Sets the password of the 'username' as 'password', given the input security answer is correct. */
+Future<bool> reooverPassword(String username, String password, String securityAnswer) async {
+  print(username);
+  print(password);
+  print(securityAnswer);
+  var bytes = utf8.encode(password);
+  String cryptPassword = sha256.convert(bytes).toString();
+  var url = "https://esof.000webhostapp.com/recoverPassword.php";
+  var response = await http.post(url, body: {"username" : username, "password" : cryptPassword, "securityAnswer" : securityAnswer});
+  if(int.parse(response.body) == 0)
+    return false;
+  return true;
+}
+

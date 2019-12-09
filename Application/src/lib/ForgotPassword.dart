@@ -1,76 +1,58 @@
-import 'package:esof/registration.dart';
+import 'package:esof/accountManagement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'Authentication.dart';
 
-String username;
+class ForgotPassword extends StatefulWidget {
 
-class ChangePasswordPage extends StatefulWidget {
-  final String _username;
-  ChangePasswordPage(this._username) {
-    username = this._username;
-  }
   @override
   State<StatefulWidget> createState() {
-    return ChangePasswordState();
+    return ForgotPasswordState();
   }
 }
 
-class ChangePasswordState extends State<ChangePasswordPage> {
+class ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController usernameController = new TextEditingController();
+  TextEditingController securityAnswerController = new TextEditingController();
   TextEditingController pwController = new TextEditingController();
-  TextEditingController newpwController = new TextEditingController();
+  TextEditingController pwConfirmController = new TextEditingController();
 
-  var inputUser;
+  var username;
+  var securityAnswer;
   var inputPw;
-  var inputNewPw;
+  var inputConfirmPw;
 
-  bool _authenticated = true;
-
-  changePassword() async{
-    inputUser = usernameController.text;
+  resetPassword() async {
+    username = usernameController.text;
+    securityAnswer = securityAnswerController.text;
     inputPw = pwController.text;
-    inputNewPw = newpwController.text;
-    if (inputPw == inputNewPw) {samePassword(); return;}
-    print(inputUser);
-    print(inputPw);
-    await authenticate();
-    if (_authenticated)
-      updatePassword(inputUser, inputNewPw);
+    inputConfirmPw = pwConfirmController.text;
+    if (inputPw != inputConfirmPw) {passwordsNoMatch(); return;}
+    bool success = await reooverPassword(username, inputPw, securityAnswer);
+    if(!success)
+      wrongSecAnswer();
   }
 
-  asyncAuthenticate() async {
-    var inputUser = usernameController.text;
-    var inputPw = pwController.text;
-    LogInRequest req = new LogInRequest(inputUser, inputPw);
-    bool authenticated = await processLogInRequest(req);
-    _authenticated = authenticated;
-  }
-
-  authenticate() async {
-    await asyncAuthenticate();
-    if (!_authenticated) {
-      pwController.text = '';
-      return showDialog(
-          context: context,
-          builder: (context)
-          {
-            return AlertDialog(
-              title: Text('Wrong username or password',
-                  style: TextStyle(fontSize: 18)),
-            );
-          });
-    }
-  }
-
-  samePassword() {
+  wrongSecAnswer() {
     return showDialog(
         context: context,
         builder: (context)
         {
           return AlertDialog(
-            content: Text('  Passwords are equal. Try to change into a different password',
+            content: Text('Wrong security answer',
+                style: TextStyle(fontSize: 20)),
+          );
+        });
+  }
+
+
+  passwordsNoMatch() {
+    return showDialog(
+        context: context,
+        builder: (context)
+        {
+          return AlertDialog(
+            content: Text('  Passwords don\'t match',
                 style: TextStyle(fontSize: 20)),
           );
         });
@@ -104,6 +86,10 @@ class ChangePasswordState extends State<ChangePasswordPage> {
                   margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                   child: Column(
                     children: <Widget>[
+                      Text('Password recovery',
+                      style:
+                      TextStyle(fontFamily: 'CustomFont', fontSize: 27, fontWeight: FontWeight.bold),),
+                      Padding(padding: EdgeInsets.only(top: 30),),
                       TextField(
                           controller: usernameController,
                           keyboardType: TextInputType.emailAddress,
@@ -124,26 +110,28 @@ class ChangePasswordState extends State<ChangePasswordPage> {
                         padding: const EdgeInsets.only(top: 25),
                       ),
                       TextField(
-                          controller: pwController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
+                          controller: securityAnswerController,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 4.0, horizontal: 10),
-                              hintText: 'password',
+                              hintText: 'security answer',
                               hintStyle: TextStyle(
                                   fontFamily: 'CustomFont',
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold),
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                  const BorderRadius.all(Radius.circular(0.1))))),
+                              border: new OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(0.2),
+                                ),
+                              ))),
                       Padding(
                         padding: const EdgeInsets.only(top: 25),
                       ),
                       TextField(
-                          controller: newpwController,
-                          keyboardType: TextInputType.emailAddress,
+                          controller: pwController,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: true,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 4.0, horizontal: 10),
@@ -160,15 +148,38 @@ class ChangePasswordState extends State<ChangePasswordPage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 25),
                       ),
+                      TextField(
+                          controller: pwConfirmController,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 4.0, horizontal: 10),
+                              hintText: 'repeat new password',
+                              hintStyle: TextStyle(
+                                  fontFamily: 'CustomFont',
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),
+                              border: new OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(0.2),
+                                ),
+                              ))),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25),
+                      ),
                       SizedBox(
                           width: double.infinity, // match_parent
                           child: RaisedButton(
-                              onPressed: changePassword,
+                              onPressed: resetPassword,
                               child: Text(
-                                'Save',
+                                'Submit',
                               ))),
                     ],
                   )),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+              ),
             ])));
   }
 }

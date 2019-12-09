@@ -1,74 +1,66 @@
-import 'package:esof/registration.dart';
+import 'package:esof/accountManagement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'Authentication.dart';
-
-String username;
-
-class ChangeUsernamePage extends StatefulWidget {
-  final String _username;
-  ChangeUsernamePage(this._username) {
-    username = this._username;
-  }
+class SignUpPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return ChangeUsernameState();
+    return SignUpPageState();
   }
 }
 
-class ChangeUsernameState extends State<ChangeUsernamePage> {
+class SignUpPageState extends State<SignUpPage> {
   TextEditingController usernameController = new TextEditingController();
   TextEditingController pwController = new TextEditingController();
-  TextEditingController newusernameController = new TextEditingController();
+  TextEditingController pwConfirmController = new TextEditingController();
+  TextEditingController safequestionController = new TextEditingController();
 
   var inputUser;
   var inputPw;
-  var inputNewUser;
+  var inputConfirmPw;
+  var safeQuestion;
 
-  bool _authenticated = true;
+  bool _existsUsername = true;
 
-  changeUsername() async{
+  register() async {
     inputUser = usernameController.text;
     inputPw = pwController.text;
-    inputNewUser = newusernameController.text;
-    if (inputUser == inputNewUser) {sameUserName(); return;}
-    await authenticate();
-    if (_authenticated)
-      updateUsername(inputUser, inputNewUser);
+    inputConfirmPw = pwConfirmController.text;
+    safeQuestion = safequestionController.text;
+    if (inputPw != inputConfirmPw) {passwordsNoMatch(); return;}
+    await verifyUsername();
+    if (!_existsUsername)
+      addUser(SignUpRequest(inputUser, inputPw, safeQuestion));
   }
 
-  asyncAuthenticate() async {
-    var inputUser = usernameController.text;
-    var inputPw = pwController.text;
-    LogInRequest req = new LogInRequest(inputUser, inputPw);
-    bool authenticated = await processLogInRequest(req);
-    _authenticated = authenticated;
+  asyncVerification() async {
+    _existsUsername = await checkIfUsernameExists(inputUser);
   }
 
-  authenticate() async{
-    await asyncAuthenticate();
-    if (!_authenticated) {
-      pwController.text = '';
+  verifyUsername() async {
+    print('chegou ao assync v');
+    await asyncVerification();
+    print('passou o assync');
+    if (_existsUsername) {
       return showDialog(
           context: context,
           builder: (context)
           {
             return AlertDialog(
-              title: Text('Wrong username or password',
+              title: Text('  Username already exists',
                   style: TextStyle(fontSize: 18)),
             );
           });
     }
   }
 
-  sameUserName() {
+  passwordsNoMatch() {
     return showDialog(
         context: context,
         builder: (context)
         {
           return AlertDialog(
-            content: Text('  Usernames are equal. Try to change into a different username',
+            content: Text('  Passwords don\'t match',
                 style: TextStyle(fontSize: 20)),
           );
         });
@@ -135,17 +127,35 @@ class ChangeUsernameState extends State<ChangeUsernamePage> {
                           fontWeight: FontWeight.bold),
                       border: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(0.1))))),
+                              const BorderRadius.all(Radius.circular(0.1))))),
               Padding(
                 padding: const EdgeInsets.only(top: 25),
               ),
               TextField(
-                  controller: newusernameController,
+                  controller: pwConfirmController,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 10),
+                      hintText: 'repeat password',
+                      hintStyle: TextStyle(
+                          fontFamily: 'CustomFont',
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                      border: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(0.1))))),
+              Padding(
+                padding: const EdgeInsets.only(top: 25),
+              ),
+              TextField(
+                  controller: safequestionController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 4.0, horizontal: 10),
-                      hintText: 'new username',
+                      hintText: 'favorite color',
                       hintStyle: TextStyle(
                           fontFamily: 'CustomFont',
                           fontSize: 25,
@@ -161,12 +171,33 @@ class ChangeUsernameState extends State<ChangeUsernamePage> {
               SizedBox(
                   width: double.infinity, // match_parent
                   child: RaisedButton(
-                      onPressed: changeUsername,
+                      onPressed: register,
                       child: Text(
-                        'Save',
+                        'Sign up',
                       ))),
             ],
           )),
+      Padding(
+        padding: const EdgeInsets.only(top: 15),
+      ),
+      Text('or', style: TextStyle(color: Colors.black, fontSize: 18)),
+      Padding(
+        padding: const EdgeInsets.only(top: 20),
+      ),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+        Image.asset(
+          'assets/fbLogo.png',
+          height: 25,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+        ),
+        Text('Sign up with Facebook',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w500)),
+      ]),
     ])));
   }
 }

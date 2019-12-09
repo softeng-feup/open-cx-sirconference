@@ -1,6 +1,6 @@
 import 'package:esof/ChangePasswordPage.dart';
 import 'package:esof/ChangeUsernamePage.dart';
-import 'package:esof/Registration.dart';
+import 'package:esof/accountManagement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

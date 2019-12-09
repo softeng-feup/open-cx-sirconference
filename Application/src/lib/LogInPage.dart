@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:async/async.dart';
 import 'dart:async';
+import 'ForgotPassword.dart';
 import 'SessionScreen.dart';
 
 class LogInPage extends StatefulWidget {
@@ -204,8 +205,16 @@ class LogInPageState extends State<LogInPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
               ),
-              Text('Forgot your password?',
-                  style: TextStyle(color: Colors.blueAccent, fontSize: 16)),
+              RawMaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgotPassword()),
+                  );
+                },
+                child: Text('Forgot your password?',
+                    style: TextStyle(color: Colors.blueAccent, fontSize: 16)),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
               ),
