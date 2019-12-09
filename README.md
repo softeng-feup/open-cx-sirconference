@@ -71,20 +71,37 @@ As far as the project's architecture is concerned, we could divide it into 3 par
 
 (DIAGRAMA AQUI)
 
-The main code behind the application, i.e. everything related to the logical architecture, is responsible for processing the functionalities requested by the end user. However, in order to fulfill most requests, there's the need to call functions from another layer, where all the functions that interact with the database are built. For a better organization of the main code, we split it into two parts: the front-end and back-end. The first one consists of Classes, which will be better described in the next section. The latter is the most relevant one here, and that's where the functions related to the mentioned connection are defined. To be precise, it includes the following files:
+The main code behind the application, i.e. everything related to the logical architecture, is responsible for processing the functionalities requested by the end user. However, in order to fulfill most requests, there's the need to call functions from another layer, where all the functions that interact with the database are built. For a better organization of the main code, we split it into two parts: the front-end and back-end. The first one consists of Classes, which will be better described in the next section.  
+
+### Physical architecture
+
+Out of the parts mentioned in the previous section, the latter is the most relevant one here, and that's where the functions related to the mentioned connection are defined. To be precise, it includes the following files:
 
  -> authentication.dart
+ 
  -> questionsDB.dart
+ 
  -> registration.dart
+ 
  -> sessionsManagement.dart
 
 The name of these files is self-explanatory; for example, the first one includes the necessary code that falls under back-end layer to authenticate a user. On the other hand, the sessionManagement.dart file includes all the functions reponsible for creating/deleting sessions from the database. 
 
-When it comes to the back-end itself, it consists of PHP files that receive requests from the dart code (specifically, the code related to the previously listed files) and forwards them to the database (MySQL), managed through the tool phpMyAdmin. All the used PHP files can be found in a separate folder (CLICK HERE). When it comes to the database, there is also a SQL file on this repository, which can be found in a separate folder as well. However, for an easy perspective of the how the database is built (this is, the interaction between classes and the list of attributes), please refer to the domain model diagram in the previous section. 
+When it comes to the back-end itself, it consists of PHP files that receive requests from the dart code (specifically, the code related to the previously listed files) and forwards them to the database (MySQL), managed through the tool phpMyAdmin. All the used PHP files can be found in a separate folder (CLICK HERE). When it comes to the database, there is also a SQL file on this repository, which can be found in a separate folder as well. However, for an easy perspective of the how the database is built (this is, the interaction between classes and the list of attributes), please refer to the domain model diagram in the previous section.
 
 ### Logical architecture
 
-Turning to logical architecture, the structure of the so called "main code" will now be explained in detail. This is the part of our project that mostly determines the user experience, since it is responsible for both displaying the user interface and handling all the user requests (even if most of them are redirected to other "layers"). 
+Turning to logical architecture, the structure of the so called "main code" will now be explained in detail. This is the part of our project that mostly determines the user experience, since it is responsible for both displaying the user interface and handling all the user requests (although most of them are redirected to other "layers").
+
+This high level component encompasses a set of files, each of them related to one page of the application. By the way, there is a State Machine pattern associated with this part of the code, so we will analyze this component under that perspective.
+
+Upon opening the application, the log in page is promptly shown to the user. In this state, there are a few ways to go besides just authenticating, including the option to sign up, log in as guest or even recover the password. If the user goes with sign up, a registration form will be presented, allowing the user to create an account. Else, if the "forgot your password" button is pressed, a different form is presented, allowing the user to change his password after answering a security question. For these two situations, the user is taken back to the Log In page after finishing the respective actions. If the selected button is "log in", assuming the user enters correct credentials, it is then redirected to the Sessions page. 
+
+Once there, the logged username is displayed and there's a gear icon on the right side. When clicked, the user is taken to his profile page, from which the username and/or password can be changed. On the bottom of the Sessions page, there are 2 buttons; by clickcing them, a window is popped up, and depending on which one was clicked, the user is prompted to create or delete a session. Finally, there's a field where the user can type a session code and then join it. 
+
+After joining the session, the user is taken to a screen where all the questions belonging to that talk are displayed. Regarding the possible actions when in this page, the user can submit a new question, like an existing one or delete questions if we're talking about the user who created the session (administrator). 
+
+It's also important to notice the code behind the implementation of this pages mainly consists of overloading the build() method of a parent widget, which then integrates sub-widgets. Besides that, there are functions that implement the wished functionalities. These could be divided into the functions that are called upon triggering a button and auxiliary functions.
 
 ### Prototype
 
