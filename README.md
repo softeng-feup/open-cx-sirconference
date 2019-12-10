@@ -69,7 +69,7 @@ Our user stories can be seen in [this link](https://trello.com/b/lqFjtiSm/user-s
 
 As far as the project's architecture is concerned, we could divide it into 3 parts, namely the high-level components, the back-end (server and database) and the components that establish a connection between the two. Below there is a diagram illustrating this schema.
 
-![Domain model](requirements/architectureDiagram.png)
+![Architecture Diagram](requirements/ArchitectureDiagram.png)
 
 The main code behind the application, i.e. everything related to the logical architecture, is responsible for processing the functionalities requested by the end user. However, in order to fulfill most requests, there's the need to call functions from another layer, where all the functions that interact with the database are built. For a better organization of the main code, we split it into two parts: the front-end and back-end. The first one consists of Classes, which will be better described in the next section.  
 
