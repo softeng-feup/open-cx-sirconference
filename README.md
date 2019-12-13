@@ -1,4 +1,4 @@
-# openCX-*your module name* Development Report
+# openCX-'Sir Conference' Development Report
 
 Welcome to the documentation pages of the *your (sub)product name* of **openCX**!
 
@@ -35,7 +35,7 @@ Sergio Bruno Rodrigues Dias
 
 ## Product Vision
 
-Our vision is simple: we want to revolutionise the way conferences are carried out. Ultimately, we are aiming towards a new "conference style", in which participants have a bigger role than ever. In our view, conferences should no longer be about big talks and just hearing.
+Our vision is simple: we want to revolutionise the way conferences are carried out. Ultimately, we are aiming towards a new "conference style", in which participants play a significant role in deciding its path, by asking questions and thereby showing what topics they are most concerned about. In our view, conferences should no longer be about big talks and just hearing.
 
 ---
 ## Elevator Pitch
