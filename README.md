@@ -69,7 +69,7 @@ Our user stories can be seen in [this link](https://trello.com/b/lqFjtiSm/user-s
 
 As far as the project's architecture is concerned, we could divide it into 3 parts, namely the high-level components, the back-end (server and database) and the components that establish a connection between the two. Below there is a diagram illustrating this schema.
 
-![Architecture Diagram](requirements/ArchitectureDiagram.png)
+![Architecture Diagram](requirements/ComponentsDiagram.png)
 
 As a side note, it's important to note that HTTP Requests is the part of dart code (set of files) that call the PHP Module and interacts with the high level layer, processing its requests.
 
