@@ -210,7 +210,7 @@ class QuestionBoxState extends State<QuestionBox> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text(username),
+                    Text(question.user),
                     Spacer(),
                     IconButton(
                       icon: Icon(Icons.cancel),

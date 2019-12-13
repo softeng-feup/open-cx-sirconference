@@ -1,3 +1,4 @@
+import 'package:esof/LogInPage.dart';
 import 'package:esof/accountManagement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,13 @@ class ForgotPasswordState extends State<ForgotPassword> {
     bool success = await reooverPassword(username, inputPw, securityAnswer);
     if(!success)
       wrongSecAnswer();
+    else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LogInPage()),
+      );
+    }
   }
 
   wrongSecAnswer() {

@@ -180,7 +180,7 @@ class InputState extends State<InputSection> {
       questionsPage = new AdminQuestionsPage(code, username);
     else questionsPage = new QuestionsPage(code, username);
     questionsPage.setActive();
-    Timer.periodic(Duration(seconds: 10), (timer) {
+    Timer.periodic(Duration(seconds: 15), (timer) {
       if (questionsPage.getActive())
         questionsPage.getQuestions();
     });
@@ -294,7 +294,7 @@ class AdminSessionManagement extends StatelessWidget {
     return Row(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 30),
+          padding: EdgeInsets.only(left: 15),
         ),
         SizedBox(
           height: 50,
@@ -309,6 +309,7 @@ class AdminSessionManagement extends StatelessWidget {
                 style: TextStyle(fontSize: 15),
               )),
         ),
+        Padding(padding: const EdgeInsets.only(right: 10)),
         Spacer(),
         SizedBox(
           height: 50,

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:esof/QuestionsPage.dart' as prefix0;
+import 'package:esof/SessionScreen.dart';
 import 'package:esof/questionsDB.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -242,19 +243,24 @@ class UpvoteState extends State<Upvote> {
   int likesCount;
 
   _pressed() {
-    setState(() {
-      if (question.liked) {
-        question.likesCount--;
-        likesCount--;
-        decrementLikes(question, username);
-      }
-      else {
-        question.likesCount++;
-        likesCount++;
-        incrementLikes(question, username);
-      }
-      question.liked = !question.liked;
-    });
+    if (username == 'Anonymous') {
+      alertAnonymous(context);
+    }
+    else {
+      setState(() {
+        if (question.liked) {
+          question.likesCount--;
+          likesCount--;
+          decrementLikes(question, username);
+        }
+        else {
+          question.likesCount++;
+          likesCount++;
+          incrementLikes(question, username);
+        }
+        question.liked = !question.liked;
+      });
+    }
   }
 
   @override
