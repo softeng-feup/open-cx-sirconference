@@ -91,6 +91,8 @@ The name of these files is self-explanatory; for example, the first one includes
 
 When it comes to the back-end itself, it consists of PHP files that receive requests from the dart code (specifically, the code related to the previously listed files) and forwards them to the database (MySQL), managed through the tool phpMyAdmin. All the used PHP files can be found in a separate folder (CLICK HERE). When it comes to the database, there is also a SQL file on this repository, which can be found in a separate folder as well. However, for an easy perspective of the how the database is built (this is, the interaction between classes and the list of attributes), please refer to the domain model diagram in the previous section.
 
+In the previous section, it is possible to find a component diagram showing the physical structure of the system.
+
 ### Logical architecture
 
 Turning to logical architecture, the structure of the so called "main code" will now be explained in detail. This is the part of our project that mostly determines the user experience, since it is responsible for both displaying the user interface and handling all the user requests (although most of them are redirected to other "layers").
