@@ -71,6 +71,8 @@ As far as the project's architecture is concerned, we could divide it into 3 par
 
 ![Architecture Diagram](requirements/ArchitectureDiagram.png)
 
+As a side note, it's important to note that HTTP Requests is the part of dart code (set of files) that call the PHP Module and interacts with the high level layer, processing its requests.
+
 The main code behind the application, i.e. everything related to the logical architecture, is responsible for processing the functionalities requested by the end user. However, in order to fulfill most requests, there's the need to call functions from another layer, where all the functions that interact with the database are built. For a better organization of the main code, we split it into two parts: the front-end and back-end. The first one consists of Classes, which will be better described in the next section.  
 
 ### Physical architecture
