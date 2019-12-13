@@ -71,6 +71,8 @@ As far as the project's architecture is concerned, we could divide it into 3 par
 
 ![Architecture Diagram](requirements/ArchitectureDiagram.png)
 
+As a side note, it's important to note that HTTP Requests is the part of dart code (set of files) that call the PHP Module and interacts with the high level layer, processing its requests.
+
 The main code behind the application, i.e. everything related to the logical architecture, is responsible for processing the functionalities requested by the end user. However, in order to fulfill most requests, there's the need to call functions from another layer, where all the functions that interact with the database are built. For a better organization of the main code, we split it into two parts: the front-end and back-end. The first one consists of Classes, which will be better described in the next section.  
 
 ### Physical architecture
@@ -89,6 +91,8 @@ The name of these files is self-explanatory; for example, the first one includes
 
 When it comes to the back-end itself, it consists of PHP files that receive requests from the dart code (specifically, the code related to the previously listed files) and forwards them to the database (MySQL), managed through the tool phpMyAdmin. All the used PHP files can be found in a separate folder (CLICK HERE). When it comes to the database, there is also a SQL file on this repository, which can be found in a separate folder as well. However, for an easy perspective of the how the database is built (this is, the interaction between classes and the list of attributes), please refer to the domain model diagram in the previous section.
 
+In the previous section, it is possible to find a component diagram showing the physical structure of the system.
+
 ### Logical architecture
 
 Turning to logical architecture, the structure of the so called "main code" will now be explained in detail. This is the part of our project that mostly determines the user experience, since it is responsible for both displaying the user interface and handling all the user requests (although most of them are redirected to other "layers").
@@ -105,7 +109,12 @@ It's also important to notice the code behind the implementation of this pages m
 
 ### Prototype
 
-*Coming soon*
+Here is a briefing of our progress at the end of iteration #0, including the used tecnologies and  implementation of user stories.
+When it comes to the use of technology, we soon realized that Flutter would be our key tool in the development of our project, since it is focused on the creation of two applications (mobile + web). By the end of this iteration, the group members are capable of using the basics of Flutter, which was essential not only to complete the prototype but also for future development. Besides this, some of the group members also started setting up a back-end, which eventually led to the few following needs: learn how to use phpMyAdmin, learn some php knowledge, learn mysqli API and set up a server that runs on a website (web000host).
+
+Speaking now of the progress made, we spent a considerable amount of time building the app pages (design part), since it is the base for the implementation of ever user story. However, we still managed to complete the user story "As a participant, I would like to ask questions". Given that most of the remaining stories required interaction with a server and database, which took us a huge amount of time to figure out, we couldn't finish any more by the end of propotype phase. Nevertheless, we have designed the core of the interface and navigation between pages is implemented.
+
+In conclusion, we believe that the goals for this iteration were all achieved and we are on the right road to implement further features. 
 
 ---
 
