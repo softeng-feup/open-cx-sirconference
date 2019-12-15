@@ -155,7 +155,7 @@ class SignUpPageState extends State<SignUpPage> {
                   decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 4.0, horizontal: 10),
-                      hintText: 'favorite color',
+                      hintText: 'security string',
                       hintStyle: TextStyle(
                           fontFamily: 'CustomFont',
                           fontSize: 25,
