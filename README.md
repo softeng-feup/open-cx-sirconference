@@ -120,7 +120,7 @@ In conclusion, we believe that the goals for this iteration were all achieved an
 
 ## Implementation
 
-*Coming soon*
+
 ---
 ## Test
 
@@ -128,7 +128,7 @@ In conclusion, we believe that the goals for this iteration were all achieved an
 
 ## Configuration and change management
 
-*Coming soon*
+The members responsible for this project didn't find the need to use branches. Instead, we would always plan our tasks ahead of time and communicate among ourselves, thus knowing which changes were going to be performed. That said, the merge feature from GitHub was enough to manage our repository.
 
 ---
 
