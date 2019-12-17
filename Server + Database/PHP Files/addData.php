@@ -18,5 +18,5 @@
 	if (isset($_POST['session']))
 		$session = $_POST['session'];
 	
-	$db->query("INSERT INTO `questions` (`id`, `username`, `question`, `session`) VALUES ('$id', '$username', '$question', '$session')")
+	$db->query("INSERT INTO `questions` (`id`, `username`, `question`, `session`, `likesCount`) VALUES ('$id', '$username', '$question', '$session', 0)")
 ?>
