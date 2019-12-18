@@ -5,7 +5,7 @@ import 'dart:async';
 class SessionScreen extends StatelessWidget {
   SessionScreen();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // Initial page seen by the user
     return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -22,7 +22,7 @@ class SessionScreen extends StatelessWidget {
               ),
             ),
             Container(
-              child: InputSection(),
+              child: InputSection(), // This is where the user inputs the session code
             ),
           ],
         ),
@@ -45,9 +45,9 @@ class InputState extends State<InputSection>{
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-      child: Row(
+      child: Row( // A row with both the text field and submit button
         children: <Widget>[
-          Flexible(
+          Flexible(  // Here is the text field where the user inputs the session code
             child: TextField(
               style: TextStyle(
                       fontSize: 50),
@@ -69,22 +69,22 @@ class InputState extends State<InputSection>{
           Padding(
               padding: EdgeInsets.only(right: 10)
           ),
-          SizedBox(
+          SizedBox(  // The submit button, which takes the user to the questions page relative to that code
               width: 200,
               height: 80,
               child: RaisedButton(
-                  onPressed: () {
-                    if (controller.text != "") {
+                  onPressed: () { // Once the button is pressed, this function is called
+                    if (controller.text != "") { // Checking if the input is empty
                       final QuestionsPage questionsPage = new QuestionsPage();
                       questionsPage.setSessionNumber(controller.text);
                       questionsPage.setActive();
-                      Timer.periodic(Duration(seconds: 20), (timer) {
+                      Timer.periodic(Duration(seconds: 20), (timer) { // Setting up a timer for the questions to be refreshed
                         if (questionsPage.getActive())
                           questionsPage.updateQuestions();
                       });
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => questionsPage),
+                        MaterialPageRoute(builder: (context) => questionsPage), // Redirects the user to the questions page
                       );
                     }
                   },
