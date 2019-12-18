@@ -124,7 +124,12 @@ In conclusion, we believe that the goals for this iteration were all achieved an
 ---
 ## Test
 
-*Coming soon*
+We have tested the following features:
+
+* Log in as guest
+* Enter a specific session
+
+To implement those tests, we used acceptance tests with the help of the flutter_gherkin package for flutter.
 
 ## Configuration and change management
 
