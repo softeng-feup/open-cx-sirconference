@@ -65,6 +65,7 @@ class QuestionsPageState extends State<QuestionsPage> {
     children = [
       Padding(padding: const EdgeInsets.only(top: 20)),
       Text("Session " + sessionCode.toString(),
+          key: const Key('session'),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
       Image.asset('assets/signUpLine.png')
     ];
