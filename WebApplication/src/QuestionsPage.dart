@@ -61,7 +61,7 @@ class QuestionsPageState extends State<QuestionsPage> {
     sessionNumber = sN;
   }  
 
-  fetchData() async {
+  fetchData() async { // fetches the data about the questions from the database
     setState(() {
       isLoading = true; 
     });
@@ -79,8 +79,8 @@ class QuestionsPageState extends State<QuestionsPage> {
 
   updateQuestions() async{
     print("Updating Questions");
-    children = [
-      Row(
+    children = [ // Creates a list where the widgets necessary to form the page are kept
+      Row( // Displays the code of the current session
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
               Text("Session " + sessionNumber.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 80)),
@@ -88,21 +88,21 @@ class QuestionsPageState extends State<QuestionsPage> {
           ),
       Image.asset('assets/signUpLine.png')
     ];
-    await fetchData();
+    await fetchData(); // fetches the questions stored in the database
     setState(() {
       int maxQuestionsDisplayed = 2;
       int cnt = 0;
       for (int index = 0; index < list.length; index++) {
-        if ((list[index]["session"] == sessionNumber) && (cnt < maxQuestionsDisplayed)){
+        if ((list[index]["session"] == sessionNumber) && (cnt < maxQuestionsDisplayed)){ // only gets the questions belonging to the current session
           children.add(Padding(padding: const EdgeInsets.only(top: 10)));
-          if (list[index]["likesCount"] == null)
+          if (list[index]["likesCount"] == null) // Checking if the question has the number of likes associated with it
             children.add(QuestionBox(list[index]["username"],(list[index]["question"] + "\n"),"0"));
           else children.add(QuestionBox(list[index]["username"],(list[index]["question"] + "\n"),list[index]["likesCount"]));
           cnt++;
         }
       }
       children.add(Padding(padding: const EdgeInsets.only(top: 10)));
-      children.add(SizedBox(
+      children.add(SizedBox( // Adds to the list the button to go back to the session screen
                     width: 300,
                     height: 80,
                     child: RaisedButton(
@@ -110,7 +110,7 @@ class QuestionsPageState extends State<QuestionsPage> {
                         active = false;
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SessionScreen()),
+                          MaterialPageRoute(builder: (context) => SessionScreen()), // takes the user back to session screen
                         );
                       },
                       child: Row(
@@ -141,9 +141,9 @@ class QuestionsPageState extends State<QuestionsPage> {
     
     return Scaffold(
         body: isLoading
-          ? Center (child: CircularProgressIndicator(),
+          ? Center (child: CircularProgressIndicator(), // when the page is refreshing, the loading indicator is shown
             )
-          : SingleChildScrollView(
+          : SingleChildScrollView( // else it displays the most liked questions
               child: Container(
                 padding: const EdgeInsets.all(15),
                 child: Column(
@@ -161,7 +161,7 @@ class QuestionBox extends StatelessWidget {
   final String question, username, numUpvotes;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // Displays the question that is seen by the user
     return Container(
       padding: const EdgeInsets.all(7),
       child: SizedBox(
@@ -169,7 +169,7 @@ class QuestionBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
+            Container( // The text of the question
               child: Text(question,
                 maxLines: 3,
                 textAlign: TextAlign.justify,
@@ -177,7 +177,7 @@ class QuestionBox extends StatelessWidget {
                   fontSize: 70),
               ),
             ),
-            Row(
+            Row(  // A row with the username of the person who submitted the question and number of likes it has
               children: <Widget>[
                 Image.asset('assets/userLogo.png',width: 60,height: 60),
                 Padding(
@@ -201,7 +201,7 @@ class QuestionBox extends StatelessWidget {
   }
 }
 
-class Upvote extends StatefulWidget {
+class Upvote extends StatefulWidget { // Simple class that displays a heart icon next to the number of likes a certain question has
   Upvote(this.numVotes);
   final String numVotes;
   @override

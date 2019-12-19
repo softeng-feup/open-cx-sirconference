@@ -79,6 +79,7 @@ class SessionScreen extends StatelessWidget {
                   ),
                   Text(
                     _username,
+                    key: const Key('user'),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
@@ -199,6 +200,7 @@ class InputState extends State<InputSection> {
         children: <Widget>[
           Flexible(
             child: TextField(
+                key: const Key('session code'),
                 controller: controller,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
@@ -219,6 +221,7 @@ class InputState extends State<InputSection> {
               width: 70, // match_parent
               height: 44,
               child: RaisedButton(
+                  key: const Key('Go'),
                   onPressed: joinSession,
                   child: Text(
                     'Go',

@@ -199,6 +199,7 @@ class LogInPageState extends State<LogInPage> {
                               onPressed: authenticate,
                               child: Text(
                                 'Log in',
+                                key: const Key('Log in')
                               ))),
                     ],
                   )),
@@ -223,6 +224,7 @@ class LogInPageState extends State<LogInPage> {
                 padding: const EdgeInsets.only(top: 20),
               ),
               RawMaterialButton(
+                key: const Key('log in as guest'),
                 onPressed: () {
                     Navigator.push(
                       context,

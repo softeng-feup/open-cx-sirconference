@@ -1,8 +1,8 @@
 # openCX-'Sir Conference' Development Report
 
-Welcome to the documentation pages of the *your (sub)product name* of **openCX**!
+Welcome to the documentation pages of the Conference Manager of **openCX**!
 
-You can find here detailed about the (sub)product, hereby mentioned as module, from a high-level vision to low-level implementation decisions, a kind of Software Development Report, organized by discipline (as of RUP): 
+You can find here detailed about the Conference Manager, hereby mentioned as module, from a high-level vision to low-level implementation decisions, a kind of Software Development Report, organized by discipline (as of RUP): 
 
 * Business modeling 
   * [Product Vision](#Product-Vision)
@@ -26,10 +26,10 @@ Please contact us!
 
 Thank you!
 
-André Filipe da Silva Moutinho
-João Ricardo Ribeiro Cardoso
-Nuno Duarte Ferreira Neves Mourinha Gonçalves
-Sergio Bruno Rodrigues Dias
+* André Filipe da Silva Moutinho
+* João Ricardo Ribeiro Cardoso
+* Nuno Duarte Ferreira Neves Mourinha Gonçalves
+* Sergio Bruno Rodrigues Dias
 
 ---
 
@@ -45,7 +45,7 @@ To answer the need to enrich the interations between the participants of a confe
 ---
 ## Requirements
 
-Our module is an interation between speaker, listeners and 
+Our module is an interation between speaker and listeners.
 
 In this section, you should describe all kinds of requirements for your module: functional and non-functional requirements.
 
@@ -57,7 +57,7 @@ Start by contextualizing your module, describing the main concepts, terms, roles
 
 ### User stories
 
-Our user stories can be seen in [this link](https://trello.com/b/lqFjtiSm/user-stories)
+Our user stories can be seen in [this Trello page](https://trello.com/b/lqFjtiSm/user-stories)
 
 ### Domain model
 
@@ -118,13 +118,16 @@ In conclusion, we believe that the goals for this iteration were all achieved an
 
 ---
 
-## Implementation
-
-
----
 ## Test
 
-*Coming soon*
+We have tested the following features:
+
+* Log in as guest
+* Enter a specific session
+
+To implement those tests, we used acceptance tests with the help of the flutter_gherkin package for flutter.
+
+---
 
 ## Configuration and change management
 
@@ -135,3 +138,9 @@ The members responsible for this project didn't find the need to use branches. I
 ## Project management
 
 We are using trello to manage our tasks. Use [this link](https://trello.com/b/tFAqYgMt/sirconference-project) to see what we are up to.
+
+---
+
+## Evolution - contributions to open-cx
+
+
