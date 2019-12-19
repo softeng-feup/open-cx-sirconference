@@ -13,7 +13,10 @@
 		
 	if (isset($_POST['session']))
 		$session = $_POST['session'];
+		
+	if (isset($_POST['userPoster']))
+		$userPoster = $_POST['userPoster'];
 	
-	$db->query("INSERT INTO `userLikesQuestion` (`user`, `question`, `session`) 
-	        VALUES ('$user', '$question', '$session')");
+	$db->query("INSERT INTO `userLikesQuestion` (`user`, `question`, `session`, `userPoster`) 
+	        VALUES ('$user', '$question', '$session', '$userPoster')");
 ?>
