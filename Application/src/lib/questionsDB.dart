@@ -93,12 +93,12 @@ void deleteQuestion(Question question) {
 void incrementLikes(Question question, String username) {
   var url = "https://esof.000webhostapp.com/addUserLikesQuestion.php";
   http.post(url,
-      body: {"user": username, "question" : question.text, "session" : question.session.toString() });
+      body: {"user": username, "question" : question.text, "session" : question.session.toString(), "userPoster": question.user });
 }
 
 /* Updates the likes associated with a question as well as removes the matching tuple from the UserLikesQuestion table. */
 void decrementLikes(Question question, String username) {
   var url = "https://esof.000webhostapp.com/deleteUserLikesQuestion.php";
   http.post(url,
-      body: {"user": username, "question" : question.text, "session" : question.session.toString() });
+      body: {"user": username, "question" : question.text, "session" : question.session.toString(), "userPoster": question.user });
 }
