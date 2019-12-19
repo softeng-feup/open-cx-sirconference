@@ -118,10 +118,6 @@ In conclusion, we believe that the goals for this iteration were all achieved an
 
 ---
 
-## Implementation
-
-
----
 ## Test
 
 We have tested the following features:
@@ -130,6 +126,8 @@ We have tested the following features:
 * Enter a specific session
 
 To implement those tests, we used acceptance tests with the help of the flutter_gherkin package for flutter.
+
+---
 
 ## Configuration and change management
 
@@ -140,3 +138,9 @@ The members responsible for this project didn't find the need to use branches. I
 ## Project management
 
 We are using trello to manage our tasks. Use [this link](https://trello.com/b/tFAqYgMt/sirconference-project) to see what we are up to.
+
+---
+
+## Evolution - contributions to open-cx
+
+
