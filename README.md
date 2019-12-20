@@ -143,4 +143,6 @@ We are using trello to manage our tasks. Use [this link](https://trello.com/b/tF
 
 ## Evolution - contributions to open-cx
 
+In order to contribute to open-cx, we are providing our web application. Not only it is the most unique feature about your project (asking questions in a mobile and having them displayed on a bigger screen), but it's also a great addition for any app that aims for interaction between the speaker and the audience. We didn't manage to fully integrate it with the open-cx backend, but we commented the code to make it easily understandable and added a README.txt file in our pull request.
+
 
