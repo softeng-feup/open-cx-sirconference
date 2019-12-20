@@ -12,8 +12,8 @@ You can find here detailed about the Conference Manager, hereby mentioned as mod
   * [User stories](#User-stories)
   * [Domain model](#Domain-model)
 * Architecture and Design
-  * [Logical architecture](#Logical-architecture)
   * [Physical architecture](#Physical-architecture)
+  * [Logical architecture](#Logical-architecture)
   * [Prototype](#Prototype)
 * [Implementation](#Implementation)
 * [Test](#Test)
