@@ -1,0 +1,4 @@
+#Fri Dec 20 09:50:36 GMT 2019
+base.0=C\:\\Users\\sergi\\esof\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex
