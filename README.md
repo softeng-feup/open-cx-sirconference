@@ -123,9 +123,12 @@ In conclusion, we believe that the goals for this iteration were all achieved an
 We have tested the following features:
 
 * Log in as guest
+
 * Enter a specific session
 
 To implement those tests, we used acceptance tests with the help of the flutter_gherkin package for flutter.
+
+The automated tests of this features can be seen [here](https://github.com/softeng-feup/open-cx-sirconference/tree/master/mobile_app/test_driver/steps).
 
 ---
 
