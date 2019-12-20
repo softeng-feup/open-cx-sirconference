@@ -2,6 +2,7 @@ import 'package:flutter_gherkin/flutter_gherkin.dart';
 import 'package:gherkin/gherkin.dart';
 import 'package:glob/glob.dart';
 import 'dart:async';
+import 'steps/askQuestion_steps.dart';
 import 'steps/enterSession_steps.dart';
 import 'steps/logInGuest_steps.dart';
 
@@ -21,6 +22,9 @@ Future<void> main() {
       IInputCode(),
       ITapButton2(),
       IExpectGo(),
+      IAmIn(),
+      IInputInField(),
+      IExpectDisplayed()
     ]
     ..customStepParameterDefinitions = []
     ..restartAppBetweenScenarios = true

@@ -114,6 +114,7 @@ class QuestionsPageState extends State<QuestionsPage> {
           return AlertDialog(
             title: Text('Write your question'),
             content: TextField(
+              key: const Key('Type here'),
               decoration: InputDecoration(hintText: 'Type here'),
               controller: t1,
             ),
@@ -125,6 +126,7 @@ class QuestionsPageState extends State<QuestionsPage> {
                   },
                   child: Text('CANCEL')),
               FlatButton(
+                  key: const Key('Submit'),
                   onPressed: () => _submitQuestion(context, t1.text),
                   child: Text('SUBMIT'))
             ],
@@ -147,6 +149,7 @@ class QuestionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
+      key: const Key('add a question'),
       fillColor: Colors.grey,
       splashColor: Colors.white,
       child: Padding(
@@ -198,7 +201,7 @@ class QuestionBoxState extends State<QuestionBox> {
 
                 Container(
                   width: 400,
-                  child: Text(text),
+                  child: Text(text, key: const Key('question'),),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20),
